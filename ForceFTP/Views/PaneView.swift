@@ -2135,6 +2135,7 @@ private struct ListInteractionOverlay: NSViewRepresentable {
         private var currentMarqueeRect: CGRect = .zero
 
         override var isFlipped: Bool { true }
+        override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 
         override func draw(_ dirtyRect: NSRect) {
             super.draw(dirtyRect)
