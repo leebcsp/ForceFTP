@@ -26,6 +26,7 @@
 		00000000C3D4E5F607080005 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000C3D4E5F607080006 /* InspectorView.swift */; };
 		00000000D4E5F60708090007 /* QuickLookPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000D4E5F60708090008 /* QuickLookPreview.swift */; };
 		00000000E5F6070809100009 /* ConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000E5F607080910000A /* ConversionService.swift */; };
+		00000000CREDITS0000000001 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 00000000CREDITS0000000002 /* Credits.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		00000000C3D4E5F607080006 /* InspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorView.swift; sourceTree = "<group>"; };
 		00000000D4E5F60708090008 /* QuickLookPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreview.swift; sourceTree = "<group>"; };
 		00000000E5F607080910000A /* ConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionService.swift; sourceTree = "<group>"; };
+		00000000CREDITS0000000002 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				00000000256FFBF46D48BD44 /* Assets.xcassets */,
 				00000000303AD22189DB2E8E /* Info.plist */,
 				00000000279B4D42C5946899 /* ForceFTP.entitlements */,
+				00000000CREDITS0000000002 /* Credits.rtf */,
 			);
 			path = ForceFTP;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0000000029BD9D8838A3CD0D /* Assets.xcassets in Resources */,
+				00000000CREDITS0000000001 /* Credits.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,7 +239,7 @@
 				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = Q397T6N4GW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -371,7 +375,7 @@
 				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = Q397T6N4GW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;

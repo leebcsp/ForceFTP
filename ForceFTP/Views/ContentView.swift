@@ -38,6 +38,7 @@ struct ContentView: View {
     @State private var showFDAAlert = false
     @AppStorage("layout.transferPanelHeight") private var savedTransferPanelHeight: Double = 120
     @State private var transferPanelHeight: CGFloat = 120
+    @AppStorage("listZoomLevel") private var zoomLevel: Int = 1
 
     var body: some View {
         NavigationSplitView(columnVisibility: $sidebarVisibility) {
@@ -774,16 +775,18 @@ struct ContentView: View {
                 return nil
             }
 
-            // Cmd++ 아이콘 확대 / Cmd+- 아이콘 축소
-            if let chars = event.charactersIgnoringModifiers {
+            // Cmd+=: 확대, Cmd+-: 축소 (Cmd+= 키를 직접 처리)
+            if let chars = event.charactersIgnoringModifiers, mods == .command {
                 if chars == "=" || chars == "+" {
-                    if mods == .command {
-                        withAnimation(.easeInOut(duration: 0.25)) { self.app.iconZoom = 2.0 }
-                        return nil
-                    }
+                    self.zoomLevel = min(self.zoomLevel + 1, 3)
+                    return nil
                 }
-                if chars == "-" && mods == .command {
-                    withAnimation(.easeInOut(duration: 0.25)) { self.app.iconZoom = 1.0 }
+                if chars == "-" {
+                    self.zoomLevel = max(self.zoomLevel - 1, 1)
+                    return nil
+                }
+                if chars == "0" {
+                    self.zoomLevel = 1
                     return nil
                 }
             }

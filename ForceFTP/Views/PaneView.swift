@@ -2475,12 +2475,31 @@ private struct FileIconView: View {
     let path: String
     let isDirectory: Bool
     var size: CGFloat = 16
+    @State private var thumbnail: NSImage?
 
     var body: some View {
-        Image(nsImage: IconCache.shared.icon(forPath: path, isDirectory: isDirectory))
-            .resizable()
-            .interpolation(.high)
-            .frame(width: size, height: size)
+        Group {
+            if let thumb = thumbnail ?? IconCache.shared.cachedThumbnail(forPath: path) {
+                Image(nsImage: thumb)
+                    .resizable()
+                    .interpolation(.high)
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                Image(nsImage: IconCache.shared.icon(forPath: path, isDirectory: isDirectory))
+                    .resizable()
+                    .interpolation(.high)
+            }
+        }
+        .frame(width: size, height: size)
+        .clipShape(RoundedRectangle(cornerRadius: thumbnail != nil ? 2 : 0))
+        .onAppear {
+            guard !isDirectory,
+                  IconCache.shared.hasThumbnailSupport(path),
+                  IconCache.shared.cachedThumbnail(forPath: path) == nil else { return }
+            IconCache.shared.requestThumbnail(forPath: path, size: size) { img in
+                thumbnail = img
+            }
+        }
     }
 }
 

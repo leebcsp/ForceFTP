@@ -6,6 +6,7 @@
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
+import QuickLookThumbnailing
 
 // MARK: - Protocol
 
@@ -423,5 +424,55 @@ final class IconCache {
 
     func clearPathCache() {
         pathCache.removeAll(keepingCapacity: true)
+        thumbnailCache.removeAll(keepingCapacity: true)
+    }
+
+    // MARK: - Thumbnail (미리보기 아이콘)
+
+    private var thumbnailCache: [String: NSImage] = [:]
+    private var thumbnailRequested: Set<String> = []
+    private let thumbnailCacheLimit = 300
+
+    /// 썸네일 지원 확장자
+    private static let thumbnailExts: Set<String> = [
+        "jpg", "jpeg", "png", "gif", "bmp", "tiff", "tif", "heic", "heif", "webp", "ico",
+        "pdf", "ai", "psd", "svg",
+        "mp4", "mov", "m4v", "avi", "mkv"
+    ]
+
+    func hasThumbnailSupport(_ path: String) -> Bool {
+        let ext = (path as NSString).pathExtension.lowercased()
+        return Self.thumbnailExts.contains(ext)
+    }
+
+    func cachedThumbnail(forPath path: String) -> NSImage? {
+        thumbnailCache[path]
+    }
+
+    func requestThumbnail(forPath path: String, size: CGFloat, completion: @escaping (NSImage) -> Void) {
+        guard !thumbnailRequested.contains(path) else { return }
+        thumbnailRequested.insert(path)
+
+        let url = URL(fileURLWithPath: path)
+        let sz = max(size * 2, 32) // Retina 대응
+        let request = QLThumbnailGenerator.Request(
+            fileAt: url,
+            size: CGSize(width: sz, height: sz),
+            scale: NSScreen.main?.backingScaleFactor ?? 2,
+            representationTypes: .thumbnail
+        )
+        QLThumbnailGenerator.shared.generateRepresentations(for: request) { [weak self] thumb, _, error in
+            guard let thumb = thumb, error == nil else { return }
+            let img = thumb.nsImage
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                if self.thumbnailCache.count >= self.thumbnailCacheLimit {
+                    self.thumbnailCache.removeAll(keepingCapacity: true)
+                    self.thumbnailRequested.removeAll(keepingCapacity: true)
+                }
+                self.thumbnailCache[path] = img
+                completion(img)
+            }
+        }
     }
 }
