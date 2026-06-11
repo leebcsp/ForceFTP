@@ -150,6 +150,7 @@ enum MediaInfoHelper {
             "-show_format", "-show_streams",
             path
         ]
+        proc.environment = ConversionService.restrictedEnv
         let pipe = Pipe()
         proc.standardOutput = pipe
         proc.standardError = Pipe()

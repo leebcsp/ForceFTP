@@ -6,6 +6,7 @@
 import SwiftUI
 import QuickLookThumbnailing
 import MapKit
+import UniformTypeIdentifiers
 
 struct InspectorView: View {
     let item: RemoteItem
@@ -254,21 +255,21 @@ struct InspectorView: View {
             return
         }
 
-        // 비디오: ffmpeg으로 썸네일 생성
-        let videoExts = ["mp4","mov","m4v","avi","mkv","webm","ts","mts"]
-        if videoExts.contains(ext) {
-            Task.detached {
-                let img = await Self.generateVideoThumbnail(url: url)
-                await MainActor.run { self.thumbnail = img }
+        // UTType으로 미디어 파일 판별 (확장자 목록 누락 방지)
+        if let utType = UTType(filenameExtension: ext) {
+            if utType.conforms(to: .audiovisualContent) || utType.conforms(to: .movie) || utType.conforms(to: .video) {
+                Task.detached {
+                    let img = await Self.generateVideoThumbnail(url: url)
+                    await MainActor.run { self.thumbnail = img }
+                }
+                return
             }
-            return
+            if utType.conforms(to: .audio) {
+                return
+            }
         }
 
-        // 오디오: QLThumbnailGenerator가 AVFoundation을 사용하여 Apple Music 권한을 유발하므로 스킵
-        let audioExts = ["mp3","m4a","wav","aiff","aif","flac","ogg","wma","aac","alac","opus"]
-        if audioExts.contains(ext) { return }
-
-        // 기타: QuickLook 썸네일
+        // 기타(문서, PDF 등): QuickLook 썸네일
         let request = QLThumbnailGenerator.Request(
             fileAt: url,
             size: CGSize(width: 400, height: 320),
@@ -320,6 +321,7 @@ struct InspectorView: View {
         process.executableURL = URL(fileURLWithPath: ffmpegPath)
         process.arguments = ["-nostdin", "-i", url.path, "-ss", "00:00:01", "-vframes", "1",
                              "-vf", "scale=400:-1", "-y", tempPath]
+        process.environment = ConversionService.restrictedEnv
         process.standardOutput = Pipe()
         process.standardError = Pipe()
         do {

@@ -509,6 +509,13 @@ final class IconCache {
 
     func requestThumbnail(forPath path: String, size: CGFloat, completion: @escaping (NSImage) -> Void) {
         guard !thumbnailRequested.contains(path) else { return }
+
+        let ext = (path as NSString).pathExtension.lowercased()
+        if let utType = UTType(filenameExtension: ext),
+           utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
+            return
+        }
+
         thumbnailRequested.insert(path)
 
         let url = URL(fileURLWithPath: path)

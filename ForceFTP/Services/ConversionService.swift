@@ -8,8 +8,6 @@
 import Foundation
 import AppKit
 import UniformTypeIdentifiers
-import Quartz
-import Foundation
 import CoreImage
 
 final class ConversionService {
@@ -979,6 +977,7 @@ final class ConversionService {
             process.executableURL = URL(fileURLWithPath: ffprobePath)
             process.arguments = ["-nostdin", "-v", "quiet", "-show_entries", "format=duration",
                                  "-of", "default=noprint_wrappers=1:nokey=1", path]
+            process.environment = Self.restrictedEnv
             let pipe = Pipe()
             process.standardOutput = pipe
             process.standardError = Pipe()
@@ -997,6 +996,7 @@ final class ConversionService {
             let process = Process()
             process.executableURL = URL(fileURLWithPath: ffmpegPath)
             process.arguments = ["-nostdin", "-i", path]
+            process.environment = Self.restrictedEnv
             let pipe = Pipe()
             process.standardOutput = Pipe()
             process.standardError = pipe
@@ -1022,6 +1022,7 @@ final class ConversionService {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: ffmpegPath)
         process.arguments = ["-nostdin"] + args
+        process.environment = Self.restrictedEnv
         let pipe = Pipe()
         process.standardOutput = pipe
         process.standardError = pipe
@@ -1074,6 +1075,20 @@ final class ConversionService {
         ]
         return candidates.first { FileManager.default.isExecutableFile(atPath: $0) }
     }
+
+    /// AudioToolbox/AVFoundation이 ~/Music 미디어 보관함에 접근하지 못하도록 제한된 환경변수
+    static let restrictedEnv: [String: String] = {
+        var env: [String: String] = [
+            "HOME": "/tmp",
+            "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+            "TMPDIR": NSTemporaryDirectory(),
+            "LANG": Locale.current.identifier
+        ]
+        if let dyld = ProcessInfo.processInfo.environment["DYLD_LIBRARY_PATH"] {
+            env["DYLD_LIBRARY_PATH"] = dyld
+        }
+        return env
+    }()
 
     func uniquePath(_ path: String) -> String {
         let fm = FileManager.default
