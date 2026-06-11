@@ -1265,22 +1265,23 @@ struct MultiInspectorView: View {
     @ViewBuilder
     private func iconView(for item: RemoteItem) -> some View {
         if pane.connection.proto == .local {
-            let parentDir = pane.parentPath(for: item.id)
-            let path = (parentDir as NSString).appendingPathComponent(item.name)
-            let ext = (item.name as NSString).pathExtension.lowercased()
-            let icon: NSImage
-            if let utType = UTType(filenameExtension: ext),
-               utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
-                icon = NSWorkspace.shared.icon(for: utType)
-            } else {
-                icon = NSWorkspace.shared.icon(forFile: path)
-            }
-            Image(nsImage: icon)
+            Image(nsImage: safeIcon(for: item))
                 .resizable().interpolation(.high).aspectRatio(contentMode: .fit)
         } else {
             Image(nsImage: item.systemIcon)
                 .resizable().interpolation(.high).aspectRatio(contentMode: .fit)
         }
+    }
+
+    private func safeIcon(for item: RemoteItem) -> NSImage {
+        let parentDir = pane.parentPath(for: item.id)
+        let path = (parentDir as NSString).appendingPathComponent(item.name)
+        let ext = (item.name as NSString).pathExtension.lowercased()
+        if let utType = UTType(filenameExtension: ext),
+           utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
+            return NSWorkspace.shared.icon(for: utType)
+        }
+        return NSWorkspace.shared.icon(forFile: path)
     }
 
     private func infoRow(_ label: String, _ value: String) -> some View {
