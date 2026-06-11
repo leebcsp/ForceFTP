@@ -5,16 +5,55 @@
 
 import SwiftUI
 
+enum AppAppearance: String, CaseIterable, Identifiable {
+    case light, dark, system
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .system: return "시스템"
+        case .light:  return "라이트"
+        case .dark:   return "다크"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .light:  return "sun.max"
+        case .dark:   return "moon"
+        case .system: return "circle.lefthalf.filled"
+        }
+    }
+
+    var iconFilled: String {
+        switch self {
+        case .light:  return "sun.max.fill"
+        case .dark:   return "moon.fill"
+        case .system: return "circle.lefthalf.filled"
+        }
+    }
+
+    func apply() {
+        switch self {
+        case .system: NSApp.appearance = nil
+        case .light:  NSApp.appearance = NSAppearance(named: .aqua)
+        case .dark:   NSApp.appearance = NSAppearance(named: .darkAqua)
+        }
+    }
+}
+
 @main
 struct ForceFTPApp: App {
     private var transferManager: TransferManager { .shared }
     @AppStorage("listZoomLevel") private var zoomLevel: Int = 1
+    @AppStorage("appearance") private var appearance: AppAppearance = .system
 
     var body: some Scene {
         WindowGroup(id: "browser") {
             ContentView()
                 .environmentObject(transferManager)
                 .frame(minWidth: 1100, minHeight: 700)
+                .onAppear { appearance.apply() }
         }
         .defaultSize(width: 1400, height: 900)
         .windowStyle(.titleBar)

@@ -41,6 +41,7 @@ struct ContentView: View {
     @AppStorage("listZoomLevel") private var zoomLevel: Int = 1
     @StateObject private var depService = DependencyService.shared
     @State private var showDepCheck = false
+    @AppStorage("appearance") private var appearance: AppAppearance = .system
 
     var body: some View {
         NavigationSplitView(columnVisibility: $sidebarVisibility) {
@@ -204,15 +205,41 @@ struct ContentView: View {
                 .help("인스펙터")
             }
 
-            ToolbarItemGroup(placement: .automatic) {
-                Spacer()
+            ToolbarItem(placement: .principal) {
                 TextField("검색", text: $search)
                     .textFieldStyle(.roundedBorder)
-                    .frame(width: 160)
+                    .frame(width: 300)
                     .onSubmit { performSearch() }
                     .onChange(of: search) { _, newValue in
                         if newValue.isEmpty { clearSearch() }
                     }
+            }
+
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    appearance = .light; AppAppearance.light.apply()
+                } label: {
+                    Image(systemName: appearance == .light ? "sun.max.fill" : "sun.max")
+                }
+                .help("라이트")
+            }
+
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    appearance = .dark; AppAppearance.dark.apply()
+                } label: {
+                    Image(systemName: appearance == .dark ? "moon.fill" : "moon")
+                }
+                .help("다크")
+            }
+
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    appearance = .system; AppAppearance.system.apply()
+                } label: {
+                    Image(systemName: "circle.lefthalf.filled")
+                }
+                .help("시스템")
             }
         }
         .sheet(isPresented: $showConnect) {
