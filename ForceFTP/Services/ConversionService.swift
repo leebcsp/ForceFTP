@@ -863,15 +863,20 @@ final class ConversionService {
             throw ConversionError.failed("ffmpeg가 설치되어 있지 않습니다. brew install ffmpeg")
         }
         let duration = await getMediaDuration(path: sourcePath)
-        try await runFFmpegWithProgress(
-            ffmpegPath: ffmpegPath,
-            args: ["-i", sourcePath, "-c:v", "libx264", "-c:a", "aac",
-                   "-preset", "medium", "-crf", "23", "-y", destPath],
-            totalDuration: duration,
-            progress: progress,
-            percentProgress: percentProgress,
-            processHandler: processHandler
-        )
+        do {
+            try await runFFmpegWithProgress(
+                ffmpegPath: ffmpegPath,
+                args: ["-i", sourcePath, "-c:v", "libx264", "-c:a", "aac",
+                       "-preset", "medium", "-crf", "23", "-y", destPath],
+                totalDuration: duration,
+                progress: progress,
+                percentProgress: percentProgress,
+                processHandler: processHandler
+            )
+        } catch {
+            try? FileManager.default.removeItem(atPath: destPath)
+            throw error
+        }
 
         guard FileManager.default.fileExists(atPath: destPath) else {
             throw ConversionError.failed("동영상 변환 실패")
@@ -907,37 +912,42 @@ final class ConversionService {
 
         progress("오디오 변환 중: \(format.name)...")
 
-        if let ffmpegPath = findExecutable("ffmpeg") {
-            let duration = await getMediaDuration(path: sourcePath)
-            let args: [String]
-            switch format.ext {
-            case "mp3":
-                args = ["-i", sourcePath, "-codec:a", "libmp3lame", "-qscale:a", "2", "-y", destPath]
-            case "m4a":
-                args = ["-i", sourcePath, "-c:a", "aac", "-b:a", "256k", "-y", destPath]
-            case "wav":
-                args = ["-i", sourcePath, "-c:a", "pcm_s16le", "-y", destPath]
-            case "aiff":
-                args = ["-i", sourcePath, "-c:a", "pcm_s16be", "-y", destPath]
-            default:
-                args = ["-i", sourcePath, "-y", destPath]
+        do {
+            if let ffmpegPath = findExecutable("ffmpeg") {
+                let duration = await getMediaDuration(path: sourcePath)
+                let args: [String]
+                switch format.ext {
+                case "mp3":
+                    args = ["-i", sourcePath, "-codec:a", "libmp3lame", "-qscale:a", "2", "-y", destPath]
+                case "m4a":
+                    args = ["-i", sourcePath, "-c:a", "aac", "-b:a", "256k", "-y", destPath]
+                case "wav":
+                    args = ["-i", sourcePath, "-c:a", "pcm_s16le", "-y", destPath]
+                case "aiff":
+                    args = ["-i", sourcePath, "-c:a", "pcm_s16be", "-y", destPath]
+                default:
+                    args = ["-i", sourcePath, "-y", destPath]
+                }
+                try await runFFmpegWithProgress(
+                    ffmpegPath: ffmpegPath,
+                    args: args,
+                    totalDuration: duration,
+                    progress: progress,
+                    percentProgress: percentProgress,
+                    processHandler: processHandler
+                )
+            } else if format.ext == "mp3" {
+                try await runAfconvert(sourcePath: sourcePath, destPath: destPath, format: "mp3f", dataFormat: ".mp3")
+            } else if format.ext == "wav" {
+                try await runAfconvert(sourcePath: sourcePath, destPath: destPath, format: "WAVE", dataFormat: "LEI16")
+            } else if format.ext == "aiff" {
+                try await runAfconvert(sourcePath: sourcePath, destPath: destPath, format: "AIFF", dataFormat: "BEI16")
+            } else {
+                throw ConversionError.failed("ffmpeg가 설치되어 있지 않습니다. brew install ffmpeg")
             }
-            try await runFFmpegWithProgress(
-                ffmpegPath: ffmpegPath,
-                args: args,
-                totalDuration: duration,
-                progress: progress,
-                percentProgress: percentProgress,
-                processHandler: processHandler
-            )
-        } else if format.ext == "mp3" {
-            try await runAfconvert(sourcePath: sourcePath, destPath: destPath, format: "mp3f", dataFormat: ".mp3")
-        } else if format.ext == "wav" {
-            try await runAfconvert(sourcePath: sourcePath, destPath: destPath, format: "WAVE", dataFormat: "LEI16")
-        } else if format.ext == "aiff" {
-            try await runAfconvert(sourcePath: sourcePath, destPath: destPath, format: "AIFF", dataFormat: "BEI16")
-        } else {
-            throw ConversionError.failed("ffmpeg가 설치되어 있지 않습니다. brew install ffmpeg")
+        } catch {
+            try? FileManager.default.removeItem(atPath: destPath)
+            throw error
         }
 
         guard FileManager.default.fileExists(atPath: destPath) else {
@@ -1064,17 +1074,15 @@ final class ConversionService {
         process.waitUntilExit()
         handle.readabilityHandler = nil
 
-        // 사용자 취소 시 (SIGTERM → terminationStatus = 15)
-        if process.terminationStatus == 15 || process.terminationStatus == 9 {
-            // 미완성 출력 파일 삭제
-            if let destArg = args.last {
+        if process.terminationStatus != 0 {
+            if let destArg = args.last, FileManager.default.fileExists(atPath: destArg) {
                 try? FileManager.default.removeItem(atPath: destArg)
             }
-            throw ConversionError.failed("변환이 취소되었습니다")
-        }
-
-        if process.terminationStatus != 0 {
-            throw ConversionError.failed("ffmpeg 변환 실패 (종료 코드: \(process.terminationStatus))")
+            let code = process.terminationStatus
+            if code == 15 || code == 9 || code == 255 {
+                throw ConversionError.failed("변환이 취소되었습니다")
+            }
+            throw ConversionError.failed("ffmpeg 변환 실패 (종료 코드: \(code))")
         }
     }
 

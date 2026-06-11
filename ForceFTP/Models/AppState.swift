@@ -394,12 +394,17 @@ final class PaneState: ObservableObject, Identifiable {
     var conversionOutputPaths: [String: String] = [:]
 
     func cancelConversion(fileName: String) {
+        let outputPath = conversionOutputPaths[fileName]
         if let proc = conversionProcesses[fileName], proc.isRunning {
             proc.terminate()
-        }
-        // 미완성 출력 파일 삭제
-        if let outputPath = conversionOutputPaths[fileName] {
-            try? FileManager.default.removeItem(atPath: outputPath)
+            DispatchQueue.global(qos: .utility).async {
+                proc.waitUntilExit()
+                if let path = outputPath {
+                    try? FileManager.default.removeItem(atPath: path)
+                }
+            }
+        } else if let path = outputPath {
+            try? FileManager.default.removeItem(atPath: path)
         }
         conversionProcesses.removeValue(forKey: fileName)
         conversionProgress.removeValue(forKey: fileName)
