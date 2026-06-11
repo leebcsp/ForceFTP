@@ -355,6 +355,9 @@ final class PaneState: ObservableObject, Identifiable {
     @Published var errorMessage: String?
     @Published var isConnected: Bool = false
 
+    /// 태그 변경 시 트리 캐시 무효화용
+    @Published var tagVersion: Int = 0
+
     /// 펼쳐진 폴더 ID
     @Published var expandedFolders: Set<UUID> = []
     /// 펼쳐진 폴더의 자식 아이템 캐시 (폴더ID → 자식 목록)

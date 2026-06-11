@@ -619,6 +619,7 @@ struct FinderList: View {
         h.combine(pane.sortAscending)
         h.combine(app.showHiddenFiles)
         h.combine(pane.tagFilter)
+        h.combine(pane.tagVersion)
         return h.finalize()
     }
 
@@ -1222,12 +1223,13 @@ struct FinderList: View {
         if let idx = pane.items.firstIndex(where: { $0.id == item.id }) {
             pane.items[idx].tagColorName = colorName
         }
-        // childrenCache도 업데이트
+            // childrenCache도 업데이트
         for (folderId, children) in pane.childrenCache {
             if let idx = children.firstIndex(where: { $0.id == item.id }) {
                 pane.childrenCache[folderId]?[idx].tagColorName = colorName
             }
         }
+        pane.tagVersion += 1
         let tagLabel = colorName ?? "없음"
         app.appendLog(.ok, "태그 변경: \(item.name) → \(tagLabel)")
     }
