@@ -53,7 +53,10 @@ struct ForceFTPApp: App {
             ContentView()
                 .environmentObject(transferManager)
                 .frame(minWidth: 1100, minHeight: 700)
-                .onAppear { appearance.apply() }
+                .onAppear {
+                    appearance.apply()
+                    Self.preflightMediaAccess()
+                }
         }
         .defaultSize(width: 1400, height: 900)
         .windowStyle(.titleBar)
@@ -118,6 +121,11 @@ struct ForceFTPApp: App {
                         NSWorkspace.shared.open(url)
                     }
                 }
+                Button("미디어 및 Apple Music 권한 열기…") {
+                    if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Media") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
             }
 
             CommandGroup(replacing: .undoRedo) {
@@ -154,6 +162,20 @@ struct ForceFTPApp: App {
 
         Settings {
             SettingsView()
+        }
+    }
+
+    private static func preflightMediaAccess() {
+        guard !UserDefaults.standard.bool(forKey: "mediaAccessGranted") else { return }
+        DispatchQueue.global(qos: .utility).async {
+            let musicDir = NSHomeDirectory() + "/Music"
+            let readable = FileManager.default.isReadableFile(atPath: musicDir)
+            if readable {
+                _ = try? FileManager.default.contentsOfDirectory(atPath: musicDir)
+            }
+            DispatchQueue.main.async {
+                UserDefaults.standard.set(true, forKey: "mediaAccessGranted")
+            }
         }
     }
 }
