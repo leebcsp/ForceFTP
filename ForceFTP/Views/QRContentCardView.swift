@@ -413,25 +413,18 @@ struct QRContentCardView: View {
         .background {
             if colorScheme == .light {
                 ZStack {
-                    LinearGradient(
-                        colors: [.blue.opacity(0.15), .purple.opacity(0.10), .cyan.opacity(0.12)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                    Circle()
-                        .fill(.blue.opacity(0.20))
-                        .frame(width: 120, height: 120)
-                        .offset(x: -60, y: -40)
-                    Circle()
-                        .fill(.purple.opacity(0.15))
-                        .frame(width: 100, height: 100)
-                        .offset(x: 80, y: 30)
-                    Circle()
-                        .fill(.mint.opacity(0.18))
-                        .frame(width: 80, height: 80)
-                        .offset(x: 20, y: 50)
+                    Color.white
+                    Rectangle().fill(.black).frame(width: 200, height: 40).offset(x: -30, y: -50)
+                    Rectangle().fill(.white).frame(width: 60, height: 80).offset(x: -80, y: 10)
+                    Rectangle().fill(.black).frame(width: 150, height: 30).offset(x: 50, y: -10)
+                    Rectangle().fill(.black.opacity(0.9)).frame(width: 80, height: 100).offset(x: -40, y: 40)
+                    Rectangle().fill(.white).frame(width: 40, height: 50).offset(x: 70, y: 50)
+                    Rectangle().fill(.black).frame(width: 120, height: 20).offset(x: 20, y: 70)
+                    Rectangle().fill(.black.opacity(0.8)).frame(width: 50, height: 60).offset(x: 100, y: -40)
+                    Rectangle().fill(.white).frame(width: 90, height: 25).offset(x: -60, y: -20)
                 }
-                .blur(radius: 30)
+                .blur(radius: 35)
+                .opacity(0.18)
             } else {
                 Color.panelCard
             }
