@@ -977,7 +977,7 @@ final class ConversionService {
         if let ffprobePath = findExecutable("ffprobe") {
             let process = Process()
             process.executableURL = URL(fileURLWithPath: ffprobePath)
-            process.arguments = ["-v", "quiet", "-show_entries", "format=duration",
+            process.arguments = ["-nostdin", "-v", "quiet", "-show_entries", "format=duration",
                                  "-of", "default=noprint_wrappers=1:nokey=1", path]
             let pipe = Pipe()
             process.standardOutput = pipe
@@ -996,7 +996,7 @@ final class ConversionService {
         if let ffmpegPath = findExecutable("ffmpeg") {
             let process = Process()
             process.executableURL = URL(fileURLWithPath: ffmpegPath)
-            process.arguments = ["-i", path]
+            process.arguments = ["-nostdin", "-i", path]
             let pipe = Pipe()
             process.standardOutput = Pipe()
             process.standardError = pipe
@@ -1021,7 +1021,7 @@ final class ConversionService {
                                         processHandler: ((Process) -> Void)? = nil) async throws {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: ffmpegPath)
-        process.arguments = args
+        process.arguments = ["-nostdin"] + args
         let pipe = Pipe()
         process.standardOutput = pipe
         process.standardError = pipe

@@ -254,7 +254,7 @@ struct InspectorView: View {
             return
         }
 
-        // 비디오: AVAssetImageGenerator로 회전 적용된 썸네일
+        // 비디오: ffmpeg으로 썸네일 생성
         let videoExts = ["mp4","mov","m4v","avi","mkv","webm","ts","mts"]
         if videoExts.contains(ext) {
             Task.detached {
@@ -263,6 +263,10 @@ struct InspectorView: View {
             }
             return
         }
+
+        // 오디오: QLThumbnailGenerator가 AVFoundation을 사용하여 Apple Music 권한을 유발하므로 스킵
+        let audioExts = ["mp3","m4a","wav","aiff","aif","flac","ogg","wma","aac","alac","opus"]
+        if audioExts.contains(ext) { return }
 
         // 기타: QuickLook 썸네일
         let request = QLThumbnailGenerator.Request(
@@ -314,7 +318,7 @@ struct InspectorView: View {
         let tempPath = NSTemporaryDirectory() + "forceftp_thumb_\(UUID().uuidString).jpg"
         let process = Process()
         process.executableURL = URL(fileURLWithPath: ffmpegPath)
-        process.arguments = ["-i", url.path, "-ss", "00:00:01", "-vframes", "1",
+        process.arguments = ["-nostdin", "-i", url.path, "-ss", "00:00:01", "-vframes", "1",
                              "-vf", "scale=400:-1", "-y", tempPath]
         process.standardOutput = Pipe()
         process.standardError = Pipe()

@@ -145,7 +145,7 @@ enum MediaInfoHelper {
         let proc = Process()
         proc.executableURL = URL(fileURLWithPath: ffprobe)
         proc.arguments = [
-            "-v", "quiet",
+            "-nostdin", "-v", "quiet",
             "-print_format", "json",
             "-show_format", "-show_streams",
             path

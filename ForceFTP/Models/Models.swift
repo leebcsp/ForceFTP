@@ -495,8 +495,7 @@ final class IconCache {
     /// 썸네일 지원 확장자
     private static let thumbnailExts: Set<String> = [
         "jpg", "jpeg", "png", "gif", "bmp", "tiff", "tif", "heic", "heif", "webp", "ico",
-        "pdf", "ai", "psd", "svg",
-        "mp4", "mov", "m4v", "avi", "mkv"
+        "pdf", "ai", "psd", "svg"
     ]
 
     func hasThumbnailSupport(_ path: String) -> Bool {
