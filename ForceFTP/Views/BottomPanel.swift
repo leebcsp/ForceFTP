@@ -318,6 +318,7 @@ struct StatusBar: View {
     @EnvironmentObject var app: AppState
     @EnvironmentObject var transfers: TransferManager
     @Binding var showTransfers: Bool
+    @State private var diskFreeSpace: String = ""
 
     var body: some View {
         HStack(spacing: 10) {
@@ -332,6 +333,18 @@ struct StatusBar: View {
             statusDot(app.rightPane.isConnected)
             Text(app.rightPane.connection.proto == .local
                  ? "로컬" : app.rightPane.connection.host)
+
+            Spacer()
+
+            // Disk free space (center)
+            if !diskFreeSpace.isEmpty {
+                HStack(spacing: 3) {
+                    Image(systemName: "internaldrive")
+                        .font(.system(size: 8))
+                    Text(diskFreeSpace)
+                }
+                .foregroundStyle(.white)
+            }
 
             Spacer()
 
@@ -350,15 +363,34 @@ struct StatusBar: View {
             } label: {
                 Image(systemName: showTransfers ? "chevron.down" : "chevron.up")
                     .font(.system(size: 8, weight: .bold))
+                    .foregroundStyle(.secondary)
+                    .frame(width: 16, height: 16)
+                    .background(Color.white.opacity(0.1))
+                    .clipShape(Circle())
             }
             .buttonStyle(.plain)
-            .foregroundStyle(.tertiary)
+            .padding(.trailing, 6)
         }
         .font(.system(size: 10.5))
         .foregroundStyle(.secondary)
         .padding(.horizontal, 10)
         .frame(height: 20)
         .background(Color(red: 0.15, green: 0.15, blue: 0.16))
+        .onAppear { updateDiskFreeSpace() }
+        .onReceive(Timer.publish(every: 30, on: .main, in: .common).autoconnect()) { _ in
+            updateDiskFreeSpace()
+        }
+    }
+
+    private func updateDiskFreeSpace() {
+        let homeURL = URL(fileURLWithPath: NSHomeDirectory())
+        if let values = try? homeURL.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey]),
+           let bytes = values.volumeAvailableCapacityForImportantUsage {
+            diskFreeSpace = ByteCountFormatter.string(fromByteCount: bytes, countStyle: .file) + " 사용 가능"
+        } else if let values = try? homeURL.resourceValues(forKeys: [.volumeAvailableCapacityKey]),
+                  let bytes = values.volumeAvailableCapacity {
+            diskFreeSpace = ByteCountFormatter.string(fromByteCount: Int64(bytes), countStyle: .file) + " 사용 가능"
+        }
     }
 
     @ViewBuilder
