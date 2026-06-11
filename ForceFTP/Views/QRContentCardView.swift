@@ -413,18 +413,25 @@ struct QRContentCardView: View {
         .background {
             if colorScheme == .light {
                 ZStack {
-                    Color.white
-                    Rectangle().fill(.black).frame(width: 200, height: 40).offset(x: -30, y: -50)
-                    Rectangle().fill(.white).frame(width: 60, height: 80).offset(x: -80, y: 10)
-                    Rectangle().fill(.black).frame(width: 150, height: 30).offset(x: 50, y: -10)
-                    Rectangle().fill(.black.opacity(0.9)).frame(width: 80, height: 100).offset(x: -40, y: 40)
-                    Rectangle().fill(.white).frame(width: 40, height: 50).offset(x: 70, y: 50)
-                    Rectangle().fill(.black).frame(width: 120, height: 20).offset(x: 20, y: 70)
-                    Rectangle().fill(.black.opacity(0.8)).frame(width: 50, height: 60).offset(x: 100, y: -40)
-                    Rectangle().fill(.white).frame(width: 90, height: 25).offset(x: -60, y: -20)
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.82, green: 0.90, blue: 0.97),
+                            Color.white,
+                            Color(red: 0.88, green: 0.94, blue: 1.0),
+                            Color.white
+                        ],
+                        startPoint: .top, endPoint: .bottom
+                    )
+                    Ellipse().fill(.white).frame(width: 220, height: 70).offset(x: -20, y: -30)
+                    Ellipse().fill(.white).frame(width: 180, height: 55).offset(x: 60, y: 15)
+                    Ellipse().fill(.white.opacity(0.95)).frame(width: 200, height: 50).offset(x: -50, y: 45)
+                    Ellipse().fill(.white).frame(width: 150, height: 45).offset(x: 30, y: -55)
+                    Ellipse().fill(Color(red: 0.72, green: 0.85, blue: 0.96).opacity(0.5))
+                        .frame(width: 90, height: 70).offset(x: 90, y: -35)
+                    Ellipse().fill(Color(red: 0.75, green: 0.87, blue: 0.97).opacity(0.4))
+                        .frame(width: 110, height: 55).offset(x: -80, y: 25)
                 }
-                .blur(radius: 35)
-                .opacity(0.18)
+                .blur(radius: 20)
             } else {
                 Color.panelCard
             }
