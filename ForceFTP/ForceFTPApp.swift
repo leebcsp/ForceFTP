@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import QuickLookThumbnailing
 
 enum AppAppearance: String, CaseIterable, Identifiable {
     case light, dark, system
@@ -53,7 +54,10 @@ struct ForceFTPApp: App {
             ContentView()
                 .environmentObject(transferManager)
                 .frame(minWidth: 1100, minHeight: 700)
-                .onAppear { appearance.apply() }
+                .onAppear {
+                    appearance.apply()
+                    Self.preflightMediaAccess()
+                }
         }
         .defaultSize(width: 1400, height: 900)
         .windowStyle(.titleBar)
@@ -162,6 +166,21 @@ struct ForceFTPApp: App {
         }
     }
 
+    /// 앱 시작 시 미디어 보관함 접근 권한을 미리 요청 (최초 1회만 다이얼로그 표시)
+    private static func preflightMediaAccess() {
+        DispatchQueue.global(qos: .utility).async {
+            let soundPath = "/System/Library/Sounds/Tink.aiff"
+            guard FileManager.default.fileExists(atPath: soundPath) else { return }
+            let url = URL(fileURLWithPath: soundPath)
+            let request = QLThumbnailGenerator.Request(
+                fileAt: url,
+                size: CGSize(width: 64, height: 64),
+                scale: 1.0,
+                representationTypes: .all
+            )
+            QLThumbnailGenerator.shared.generateBestRepresentation(for: request) { _, _ in }
+        }
+    }
 }
 
 private struct NewWindowButton: View {
