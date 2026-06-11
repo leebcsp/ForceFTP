@@ -1,0 +1,416 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00000000052967557187A33F /* TransferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000023F274C70D439CF8 /* TransferManager.swift */; };
+		0000000014AD80D9C643FA6D /* PaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000073E5CB18ACE6F3F2 /* PaneView.swift */; };
+		00000000277D627662D7CD93 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000D5DF0FDDAB72BEB /* AppState.swift */; };
+		0000000029BD9D8838A3CD0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00000000256FFBF46D48BD44 /* Assets.xcassets */; };
+		0000000029CE1235D15ADF9B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000003523788C753882C0 /* ContentView.swift */; };
+		000000002DC8284771F6F47A /* ConnectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000005054E4B1653B7D91 /* ConnectSheet.swift */; };
+		0000000030C9488015D7F868 /* BottomPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000005B570CFEE525F29C /* BottomPanel.swift */; };
+		000000003910C65507FF92AE /* InfoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000005A96A321EC519A27 /* InfoSheet.swift */; };
+		000000003EB750DAABF1466B /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000646F9F16E62D4CFD /* FileService.swift */; };
+		000000004EB371EB2FE3812A /* ForceFTPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000673156143CAF30DE /* ForceFTPApp.swift */; };
+		000000005C651FD257C33626 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000007465E8B3B0BB7D4E /* Models.swift */; };
+		000000005E9AAA5FA4FD9E7B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000043D48DF053D89822 /* SettingsView.swift */; };
+		00000000689C6AFEB61BE2D9 /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000003B98221E228F05A1 /* TerminalView.swift */; };
+		00000000A1B2C3D4E5F60001 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000A1B2C3D4E5F60002 /* SidebarView.swift */; };
+		00000000AAAA111122223333 /* GoogleDriveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000AAAA444455556666 /* GoogleDriveService.swift */; };
+		00000000B2C3D4E5F6070003 /* PaneTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000B2C3D4E5F6070004 /* PaneTerminal.swift */; };
+		00000000C3D4E5F607080005 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000C3D4E5F607080006 /* InspectorView.swift */; };
+		00000000D4E5F60708090007 /* QuickLookPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000D4E5F60708090008 /* QuickLookPreview.swift */; };
+		00000000E5F6070809100009 /* ConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000E5F607080910000A /* ConversionService.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		000000000D5DF0FDDAB72BEB /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		0000000023F274C70D439CF8 /* TransferManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferManager.swift; sourceTree = "<group>"; };
+		00000000256FFBF46D48BD44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		00000000279B4D42C5946899 /* ForceFTP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ForceFTP.entitlements; sourceTree = "<group>"; };
+		00000000303AD22189DB2E8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		000000003523788C753882C0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		000000003B98221E228F05A1 /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
+		0000000043D48DF053D89822 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		000000005054E4B1653B7D91 /* ConnectSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectSheet.swift; sourceTree = "<group>"; };
+		000000005A96A321EC519A27 /* InfoSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSheet.swift; sourceTree = "<group>"; };
+		000000005B570CFEE525F29C /* BottomPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomPanel.swift; sourceTree = "<group>"; };
+		00000000646F9F16E62D4CFD /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
+		00000000673156143CAF30DE /* ForceFTPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceFTPApp.swift; sourceTree = "<group>"; };
+		00000000739161FEF406F4EA /* ForceFTP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForceFTP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0000000073E5CB18ACE6F3F2 /* PaneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaneView.swift; sourceTree = "<group>"; };
+		000000007465E8B3B0BB7D4E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		00000000A1B2C3D4E5F60002 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		00000000AAAA444455556666 /* GoogleDriveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDriveService.swift; sourceTree = "<group>"; };
+		00000000B2C3D4E5F6070004 /* PaneTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaneTerminal.swift; sourceTree = "<group>"; };
+		00000000C3D4E5F607080006 /* InspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorView.swift; sourceTree = "<group>"; };
+		00000000D4E5F60708090008 /* QuickLookPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreview.swift; sourceTree = "<group>"; };
+		00000000E5F607080910000A /* ConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0000000036E99137231D9EF4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		000000000B9B7BC14B31DCD3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00000000739161FEF406F4EA /* ForceFTP.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00000000118990A253598A62 /* ForceFTP */ = {
+			isa = PBXGroup;
+			children = (
+				00000000673156143CAF30DE /* ForceFTPApp.swift */,
+				000000002C24EFD33181EF08 /* Models */,
+				000000004B2169DF22318EA3 /* Views */,
+				00000000565C20200CA7B637 /* Services */,
+				00000000256FFBF46D48BD44 /* Assets.xcassets */,
+				00000000303AD22189DB2E8E /* Info.plist */,
+				00000000279B4D42C5946899 /* ForceFTP.entitlements */,
+			);
+			path = ForceFTP;
+			sourceTree = "<group>";
+		};
+		000000002C24EFD33181EF08 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				000000000D5DF0FDDAB72BEB /* AppState.swift */,
+				000000007465E8B3B0BB7D4E /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		000000004B2169DF22318EA3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				000000005B570CFEE525F29C /* BottomPanel.swift */,
+				000000005054E4B1653B7D91 /* ConnectSheet.swift */,
+				000000003523788C753882C0 /* ContentView.swift */,
+				000000005A96A321EC519A27 /* InfoSheet.swift */,
+				0000000073E5CB18ACE6F3F2 /* PaneView.swift */,
+				0000000043D48DF053D89822 /* SettingsView.swift */,
+				000000003B98221E228F05A1 /* TerminalView.swift */,
+				00000000A1B2C3D4E5F60002 /* SidebarView.swift */,
+				00000000B2C3D4E5F6070004 /* PaneTerminal.swift */,
+				00000000C3D4E5F607080006 /* InspectorView.swift */,
+				00000000D4E5F60708090008 /* QuickLookPreview.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		00000000565C20200CA7B637 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				00000000E5F607080910000A /* ConversionService.swift */,
+				00000000646F9F16E62D4CFD /* FileService.swift */,
+				00000000AAAA444455556666 /* GoogleDriveService.swift */,
+				0000000023F274C70D439CF8 /* TransferManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		000000006A95514DF31A553E = {
+			isa = PBXGroup;
+			children = (
+				00000000118990A253598A62 /* ForceFTP */,
+				000000000B9B7BC14B31DCD3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0000000027FDD28498CA86AA /* ForceFTP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0000000044B2BCF321A92D22 /* Build configuration list for PBXNativeTarget "ForceFTP" */;
+			buildPhases = (
+				000000005A4EFB0609498BC8 /* Sources */,
+				0000000036E99137231D9EF4 /* Frameworks */,
+				0000000019272DBB2BA09650 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ForceFTP;
+			productName = ForceFTP;
+			productReference = 00000000739161FEF406F4EA /* ForceFTP.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		000000007243A3E4ECD8183A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 2650;
+				TargetAttributes = {
+					0000000027FDD28498CA86AA = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 0000000017F77461F15AF186 /* Build configuration list for PBXProject "ForceFTP" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = ko;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				ko,
+				Base,
+			);
+			mainGroup = 000000006A95514DF31A553E;
+			productRefGroup = 000000000B9B7BC14B31DCD3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0000000027FDD28498CA86AA /* ForceFTP */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0000000019272DBB2BA09650 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0000000029BD9D8838A3CD0D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		000000005A4EFB0609498BC8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000277D627662D7CD93 /* AppState.swift in Sources */,
+				000000005C651FD257C33626 /* Models.swift in Sources */,
+				000000003EB750DAABF1466B /* FileService.swift in Sources */,
+				00000000052967557187A33F /* TransferManager.swift in Sources */,
+				00000000AAAA111122223333 /* GoogleDriveService.swift in Sources */,
+				00000000E5F6070809100009 /* ConversionService.swift in Sources */,
+				000000004EB371EB2FE3812A /* ForceFTPApp.swift in Sources */,
+				0000000030C9488015D7F868 /* BottomPanel.swift in Sources */,
+				000000002DC8284771F6F47A /* ConnectSheet.swift in Sources */,
+				0000000029CE1235D15ADF9B /* ContentView.swift in Sources */,
+				000000003910C65507FF92AE /* InfoSheet.swift in Sources */,
+				0000000014AD80D9C643FA6D /* PaneView.swift in Sources */,
+				000000005E9AAA5FA4FD9E7B /* SettingsView.swift in Sources */,
+				00000000689C6AFEB61BE2D9 /* TerminalView.swift in Sources */,
+				00000000A1B2C3D4E5F60001 /* SidebarView.swift in Sources */,
+				00000000B2C3D4E5F6070003 /* PaneTerminal.swift in Sources */,
+				00000000C3D4E5F607080005 /* InspectorView.swift in Sources */,
+				00000000D4E5F60708090007 /* QuickLookPreview.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		000000002D05CD25AB968367 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = none;
+				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 37;
+				DEVELOPMENT_TEAM = Q397T6N4GW;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ForceFTP/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.55;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.ForceFTP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		0000000040CF9AA0FE7DA417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		0000000048C37F4D561D5724 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		000000004D694B8D750CF10E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = none;
+				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 37;
+				DEVELOPMENT_TEAM = Q397T6N4GW;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ForceFTP/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.55;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.ForceFTP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0000000017F77461F15AF186 /* Build configuration list for PBXProject "ForceFTP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0000000048C37F4D561D5724 /* Debug */,
+				0000000040CF9AA0FE7DA417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0000000044B2BCF321A92D22 /* Build configuration list for PBXNativeTarget "ForceFTP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000004D694B8D750CF10E /* Debug */,
+				000000002D05CD25AB968367 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 000000007243A3E4ECD8183A /* Project object */;
+}
