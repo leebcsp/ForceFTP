@@ -452,7 +452,8 @@ actor FileService {
             do {
                 let vals = try fileURL.resourceValues(forKeys: keys)
                 let name = fileURL.lastPathComponent
-                let isDir = vals.isDirectory ?? false
+                let ext = (name as NSString).pathExtension.lowercased()
+                let isDir = (vals.isDirectory ?? false) && ext != "app"
                 let size = Int64(vals.fileSize ?? 0)
                 let modified = vals.contentModificationDate ?? Date()
                 let attrs = try? fm.attributesOfItem(atPath: fileURL.path)

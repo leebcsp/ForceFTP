@@ -1147,6 +1147,7 @@ struct FinderList: View {
                            }
                            case .convertToPDF: runTrackedConversion(item: item, parentPath: parentPath, outputExt: "pdf") { svc, path, prog, pct, proc in try await svc.convertToPDF(at: path, progress: prog, percentProgress: pct, processHandler: proc) }
                            case .compressFiles: compressSelectedFiles(item: item, parentPath: parentPath)
+                           case .decompressFiles: decompressArchive(item: item, parentPath: parentPath)
                            }
                        },
                        conversionProgress: pane.conversionProgress[item.name],
@@ -1442,6 +1443,24 @@ struct FinderList: View {
         }
     }
 
+    private func decompressArchive(item: RemoteItem, parentPath: String) {
+        let path = (parentPath as NSString).appendingPathComponent(item.name)
+        Task {
+            app.appendLog(.info, "압축 해제 시작: \(item.name)")
+            do {
+                let resultNames = try await ConversionService.shared.decompressZip(at: path) { msg in
+                    Task { @MainActor in self.app.appendLog(.info, msg) }
+                }
+                if let firstName = resultNames.first {
+                    pendingScrollToName = firstName
+                }
+                await reload()
+            } catch {
+                app.appendLog(.error, "압축 해제 실패: \(error.localizedDescription)")
+            }
+        }
+    }
+
     private func handleDouble(item: RemoteItem, parentPath: String) {
         // 태그 필터 모드: 해당 파일의 부모 폴더로 이동
         if pane.tagFilter != nil, let fp = item.fullPath {
@@ -1462,7 +1481,12 @@ struct FinderList: View {
             Task { await reload() }
         } else if pane.connection.proto == .local {
             let fullPath = (parentPath as NSString).appendingPathComponent(item.name)
-            NSWorkspace.shared.open(URL(fileURLWithPath: fullPath))
+            let ext = (item.name as NSString).pathExtension.lowercased()
+            if ["zip", "tar", "gz", "tgz", "bz2", "7z"].contains(ext) {
+                decompressArchive(item: item, parentPath: parentPath)
+            } else {
+                NSWorkspace.shared.open(URL(fileURLWithPath: fullPath))
+            }
         }
     }
 
@@ -1609,6 +1633,7 @@ private enum FileRowAction {
     case pdfToImages(ConversionService.ImageFormat)
     case convertToPDF
     case compressFiles
+    case decompressFiles
 }
 
 private struct FileRow: View, Equatable {
@@ -1971,6 +1996,10 @@ private struct FileRow: View, Equatable {
                 Divider()
             }
             if isLocal {
+                let itemExt = (item.name as NSString).pathExtension.lowercased()
+                if ["zip", "tar", "gz", "tgz", "bz2", "7z"].contains(itemExt) {
+                    Button("압축 풀기") { onAction(.decompressFiles) }
+                }
                 Button("\"\(Self.truncatedMiddle(item.name, max: 25)).zip\" 으로 압축") { onAction(.compressFiles) }
                 Divider()
             }

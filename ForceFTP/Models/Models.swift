@@ -162,6 +162,7 @@ struct RemoteItem: Identifiable, Hashable {
     var iconName: String {
         if isDirectory { return "folder" }
         let ext = (name as NSString).pathExtension.lowercased()
+        if ext == "app" { return "app.dashed" }
         switch ext {
         case "png", "jpg", "jpeg", "gif", "webp", "heic", "svg", "bmp":
             return "photo"
@@ -466,6 +467,15 @@ final class IconCache {
     }
 
     func icon(forPath path: String, isDirectory: Bool) -> NSImage {
+        let ext = (path as NSString).pathExtension.lowercased()
+        if ext == "app" {
+            if let cached = pathCache[path] { return cached }
+            let img = NSWorkspace.shared.icon(forFile: path)
+            img.size = NSSize(width: 16, height: 16)
+            if pathCache.count >= cacheLimit { pathCache.removeAll(keepingCapacity: true) }
+            pathCache[path] = img
+            return img
+        }
         let name = (path as NSString).lastPathComponent
         return icon(for: name, isDirectory: isDirectory)
     }
