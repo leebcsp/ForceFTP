@@ -18,6 +18,6 @@ struct TerminalView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity)
-        .background(Color(red: 0.18, green: 0.18, blue: 0.19))
+        .background(Color.panelList)
     }
 }

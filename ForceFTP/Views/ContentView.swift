@@ -44,11 +44,72 @@ struct ContentView: View {
     @AppStorage("appearance") private var appearance: AppAppearance = .system
 
     var body: some View {
+        mainContent
+            .toolbar { toolbarContent }
+            .sheet(isPresented: $showConnect) {
+                ConnectSheet(side: connectSide, isPresented: $showConnect,
+                             editConnection: editingConnection)
+                .environmentObject(app)
+            }
+            .onChange(of: showConnect) { _, showing in
+                if !showing { editingConnection = nil }
+            }
+            .onChange(of: transfers.transferLogs.count) { _, _ in
+                if !showTransfers { withAnimation(.easeInOut(duration: 0.2)) { showTransfers = true } }
+            }
+            .onChange(of: transfers.transfers.count) { _, _ in
+                if !showTransfers { withAnimation(.easeInOut(duration: 0.2)) { showTransfers = true } }
+            }
+            .onChange(of: app.pane(app.activeSide).selection) { _, _ in
+                scheduleInspectorUpdate()
+            }
+            .onChange(of: app.activeSide) { _, _ in
+                scheduleInspectorUpdate()
+            }
+            .overlay { if let it = infoItem { infoOverlay(item: it) } }
+            .overlay(alignment: .top) {
+                ToastOverlay(toasts: app.toasts, onDismiss: { app.removeToast($0) })
+            }
+            .overlay { if showDepCheck { DependencyCheckView(service: depService).transition(.opacity) } }
+            .onAppear {
+                transferPanelHeight = CGFloat(savedTransferPanelHeight)
+                initialLoad(); setupSpacebarMonitor(); setupTransferCallback()
+                checkFullDiskAccess(); checkDependencies()
+            }
+            .alert("전체 디스크 접근 권한 필요", isPresented: $showFDAAlert) {
+                Button("시스템 설정 열기") {
+                    if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles") {
+                        NSWorkspace.shared.open(url)
+                    }
+                    UserDefaults.standard.set(true, forKey: "TL.fdaPrompted")
+                }
+                Button("나중에", role: .cancel) { UserDefaults.standard.set(true, forKey: "TL.fdaPrompted") }
+            } message: {
+                Text("파일 관리를 위해 전체 디스크 접근 권한이 필요합니다.\n시스템 설정 > 개인정보 보호 > 전체 디스크 접근에서 ForceFTP를 추가해 주세요.")
+            }
+            .onDisappear {
+                app.saveLastPaneState()
+                if let monitor = spacebarMonitor { NSEvent.removeMonitor(monitor); spacebarMonitor = nil }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in app.saveLastPaneState() }
+            .onReceive(NotificationCenter.default.publisher(for: .openConnect)) { _ in connectSide = app.activeSide; showConnect = true }
+            .onReceive(NotificationCenter.default.publisher(for: .disconnect)) { _ in disconnectActive() }
+            .onReceive(NotificationCenter.default.publisher(for: .upload))   { _ in performAction(.upload) }
+            .onReceive(NotificationCenter.default.publisher(for: .download)) { _ in performAction(.download) }
+            .onReceive(NotificationCenter.default.publisher(for: .refresh))  { _ in refresh(app.activeSide) }
+            .onReceive(NotificationCenter.default.publisher(for: .getInfo))  { _ in openInfoForActive() }
+            .modifier(FileNotificationHandlers(
+                onCopy: handleFileCopy, onPaste: handleFilePaste, onUndo: fileUndo,
+                onCopyPath: copySelectedPaths, onDelete: fileDelete, onPermanentDelete: filePermanentDelete
+            ))
+    }
+
+    @ViewBuilder
+    private var mainContent: some View {
         NavigationSplitView(columnVisibility: $sidebarVisibility) {
             SidebarView(onNavigate: { path in
                 let side = app.activeSide
                 let currentPane = app.pane(side)
-                // If currently on a remote connection, switch back to local
                 if currentPane.connection.proto != .local {
                     let localConn = Connection.localPlaceholder
                     let newPane = PaneState(side: side, connection: localConn)
@@ -69,9 +130,7 @@ struct ContentView: View {
             .navigationSplitViewColumnWidth(min: 180, ideal: 210, max: 280)
         } detail: {
             HStack(spacing: 0) {
-                // Main content
                 VStack(spacing: 0) {
-                    // Dual pane area
                     GeometryReader { geo in
                         let totalW = geo.size.width
                         let centerW: CGFloat = 46
@@ -95,7 +154,6 @@ struct ContentView: View {
                         }
                     }
 
-                    // Bottom: transfer panel + status bar
                     if showTransfers {
                         ResizableDivider(dimension: $transferPanelHeight, edge: .top,
                                          minSize: 60, maxSize: 400,
@@ -107,7 +165,6 @@ struct ContentView: View {
                     StatusBar(showTransfers: $showTransfers)
                 }
 
-                // Inspector panel (right side, resizable)
                 if showInspector {
                     inspectorPanel
                         .frame(width: inspectorWidth)
@@ -118,207 +175,135 @@ struct ContentView: View {
         }
         .environmentObject(app)
         .navigationTitle(activeFolderName)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigation) {
-                Button { goBack() } label: {
-                    Image(systemName: "chevron.left")
-                }
-                .disabled(!app.pane(app.activeSide).canGoBack)
-                .help("뒤로")
+    }
 
-                Button { goForward() } label: {
-                    Image(systemName: "chevron.right")
-                }
-                .disabled(!app.pane(app.activeSide).canGoForward)
-                .help("앞으로")
+    // MARK: - Toolbar
+
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        ToolbarItemGroup(placement: .navigation) {
+            Button { goBack() } label: {
+                Image(systemName: "chevron.left")
             }
+            .disabled(!app.pane(app.activeSide).canGoBack)
+            .help("뒤로")
 
+            Button { goForward() } label: {
+                Image(systemName: "chevron.right")
+            }
+            .disabled(!app.pane(app.activeSide).canGoForward)
+            .help("앞으로")
+        }
 
-            ToolbarItemGroup(placement: .primaryAction) {
-                Menu {
-                    Section("연결 목록") {
-                        ForEach(app.savedConnections) { c in
-                            Menu {
-                                Button("연결") { connectFromRecent(c) }
-                                Button("수정 후 연결...") {
-                                    editingConnection = c
-                                    connectSide = app.activeSide
-                                    showConnect = true
-                                }
-                                Divider()
-                                Button("삭제", role: .destructive) {
-                                    app.removeSavedConnection(c)
-                                }
-                            } label: {
-                                Label("\(c.username)@\(c.host)", systemImage: protoIcon(c.proto))
-                            } primaryAction: {
-                                connectFromRecent(c)
+        ToolbarItemGroup(placement: .primaryAction) {
+            Menu {
+                Section("연결 목록") {
+                    ForEach(app.savedConnections) { c in
+                        Menu {
+                            Button("연결") { connectFromRecent(c) }
+                            Button("수정 후 연결...") {
+                                editingConnection = c
+                                connectSide = app.activeSide
+                                showConnect = true
                             }
+                            Divider()
+                            Button("삭제", role: .destructive) {
+                                app.removeSavedConnection(c)
+                            }
+                        } label: {
+                            Label("\(c.username)@\(c.host)", systemImage: protoIcon(c.proto))
+                        } primaryAction: {
+                            connectFromRecent(c)
                         }
                     }
-                    Divider()
-                    Button("새 연결...") {
-                        editingConnection = nil
-                        connectSide = app.activeSide; showConnect = true
-                    }
-                } label: {
-                    Image(systemName: "bolt.horizontal.fill")
                 }
-                .help("서버 연결")
-
-                Button { refresh(app.activeSide) } label: {
-                    Image(systemName: "arrow.clockwise")
-                }
-                .help("새로고침")
-
-                Button { performAction(.newFolder) } label: {
-                    Image(systemName: "folder.badge.plus")
-                }
-                .help("새 폴더")
-
-                Button { openInfoForActive() } label: {
-                    Image(systemName: "info.circle")
-                }
-                .help("정보")
-
-                Button { performAction(.delete) } label: {
-                    Image(systemName: "trash")
-                }
-                .help("삭제")
-
                 Divider()
-
-                Button {
-                    app.showHiddenFiles.toggle()
-                } label: {
-                    Image(systemName: app.showHiddenFiles ? "eye" : "eye.slash")
+                Button("새 연결...") {
+                    editingConnection = nil
+                    connectSide = app.activeSide; showConnect = true
                 }
-                .help(app.showHiddenFiles ? "숨김 파일 감추기" : "숨김 파일 보기")
+            } label: {
+                Image(systemName: "bolt.horizontal.fill")
+            }
+            .help("서버 연결")
 
-                Button {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        showInspector.toggle()
-                    }
-                } label: {
-                    Image(systemName: "sidebar.right")
-                }
-                .help("인스펙터")
+            Button { refresh(app.activeSide) } label: {
+                Image(systemName: "arrow.clockwise")
             }
+            .help("새로고침")
 
-            ToolbarItem(placement: .principal) {
-                TextField("검색", text: $search)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 300)
-                    .onSubmit { performSearch() }
-                    .onChange(of: search) { _, newValue in
-                        if newValue.isEmpty { clearSearch() }
-                    }
+            Button { performAction(.newFolder) } label: {
+                Image(systemName: "folder.badge.plus")
             }
+            .help("새 폴더")
 
-            ToolbarItem(placement: .automatic) {
-                Button {
-                    appearance = .light; AppAppearance.light.apply()
-                } label: {
-                    Image(systemName: appearance == .light ? "sun.max.fill" : "sun.max")
-                }
-                .help("라이트")
+            Button { openInfoForActive() } label: {
+                Image(systemName: "info.circle")
             }
+            .help("정보")
 
-            ToolbarItem(placement: .automatic) {
-                Button {
-                    appearance = .dark; AppAppearance.dark.apply()
-                } label: {
-                    Image(systemName: appearance == .dark ? "moon.fill" : "moon")
-                }
-                .help("다크")
+            Button { performAction(.delete) } label: {
+                Image(systemName: "trash")
             }
+            .help("삭제")
 
-            ToolbarItem(placement: .automatic) {
-                Button {
-                    appearance = .system; AppAppearance.system.apply()
-                } label: {
-                    Image(systemName: "circle.lefthalf.filled")
+            Divider()
+
+            Button {
+                app.showHiddenFiles.toggle()
+            } label: {
+                Image(systemName: app.showHiddenFiles ? "eye" : "eye.slash")
+            }
+            .help(app.showHiddenFiles ? "숨김 파일 감추기" : "숨김 파일 보기")
+        }
+
+        ToolbarItem(placement: .principal) {
+            TextField("검색", text: $search)
+                .textFieldStyle(.roundedBorder)
+                .frame(width: 300)
+                .onSubmit { performSearch() }
+                .onChange(of: search) { _, newValue in
+                    if newValue.isEmpty { clearSearch() }
                 }
-                .help("시스템")
+        }
+
+        ToolbarItem(placement: .automatic) {
+            Button {
+                appearance = .light; AppAppearance.light.apply()
+            } label: {
+                Image(systemName: appearance == .light ? "sun.max.fill" : "sun.max")
             }
+            .help("라이트")
         }
-        .sheet(isPresented: $showConnect) {
-            ConnectSheet(side: connectSide, isPresented: $showConnect,
-                         editConnection: editingConnection)
-            .environmentObject(app)
-        }
-        .onChange(of: showConnect) { _, showing in
-            if !showing { editingConnection = nil }
-        }
-        .onChange(of: transfers.transferLogs.count) { _, _ in
-            if !showTransfers { withAnimation(.easeInOut(duration: 0.2)) { showTransfers = true } }
-        }
-        .onChange(of: transfers.transfers.count) { _, _ in
-            if !showTransfers { withAnimation(.easeInOut(duration: 0.2)) { showTransfers = true } }
-        }
-        .onChange(of: app.pane(app.activeSide).selection) { _, _ in
-            scheduleInspectorUpdate()
-        }
-        .onChange(of: app.activeSide) { _, _ in
-            scheduleInspectorUpdate()
-        }
-        .overlay {
-            if let it = infoItem {
-                infoOverlay(item: it)
+
+        ToolbarItem(placement: .automatic) {
+            Button {
+                appearance = .dark; AppAppearance.dark.apply()
+            } label: {
+                Image(systemName: appearance == .dark ? "moon.fill" : "moon")
             }
+            .help("다크")
         }
-        .overlay(alignment: .top) {
-            ToastOverlay(toasts: app.toasts, onDismiss: { app.removeToast($0) })
-        }
-        .overlay {
-            if showDepCheck {
-                DependencyCheckView(service: depService)
-                    .transition(.opacity)
+
+        ToolbarItem(placement: .automatic) {
+            Button {
+                appearance = .system; AppAppearance.system.apply()
+            } label: {
+                Image(systemName: "circle.lefthalf.filled")
             }
+            .help("시스템")
         }
-        .onAppear {
-            transferPanelHeight = CGFloat(savedTransferPanelHeight)
-            initialLoad()
-            setupSpacebarMonitor()
-            setupTransferCallback()
-            checkFullDiskAccess()
-            checkDependencies()
-        }
-        .alert("전체 디스크 접근 권한 필요", isPresented: $showFDAAlert) {
-            Button("시스템 설정 열기") {
-                if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles") {
-                    NSWorkspace.shared.open(url)
+
+        ToolbarItemGroup(placement: .automatic) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    showInspector.toggle()
                 }
-                UserDefaults.standard.set(true, forKey: "TL.fdaPrompted")
+            } label: {
+                Image(systemName: "sidebar.right")
             }
-            Button("나중에", role: .cancel) {
-                UserDefaults.standard.set(true, forKey: "TL.fdaPrompted")
-            }
-        } message: {
-            Text("파일 관리를 위해 전체 디스크 접근 권한이 필요합니다.\n시스템 설정 > 개인정보 보호 > 전체 디스크 접근에서 ForceFTP를 추가해 주세요.")
+            .help("인스펙터")
         }
-        .onDisappear {
-            app.saveLastPaneState()
-            if let monitor = spacebarMonitor {
-                NSEvent.removeMonitor(monitor)
-                spacebarMonitor = nil
-            }
-        }
-        .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in
-            app.saveLastPaneState()
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .openConnect)) { _ in
-            connectSide = app.activeSide; showConnect = true
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .disconnect)) { _ in disconnectActive() }
-        .onReceive(NotificationCenter.default.publisher(for: .upload))   { _ in performAction(.upload) }
-        .onReceive(NotificationCenter.default.publisher(for: .download)) { _ in performAction(.download) }
-        .onReceive(NotificationCenter.default.publisher(for: .refresh))  { _ in refresh(app.activeSide) }
-        .onReceive(NotificationCenter.default.publisher(for: .getInfo))  { _ in openInfoForActive() }
-        .modifier(FileNotificationHandlers(
-            onCopy: handleFileCopy, onPaste: handleFilePaste, onUndo: fileUndo,
-            onCopyPath: copySelectedPaths, onDelete: fileDelete, onPermanentDelete: filePermanentDelete
-        ))
     }
 
     // MARK: - Center Arrow Buttons
@@ -344,11 +329,11 @@ struct ContentView: View {
                 Button { moveSelectedFiles(from: .left, to: .right) } label: {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(leftCount > 0 ? Color(red: 0.76, green: 0.60, blue: 0.20) : .secondary)
+                        .foregroundStyle(leftCount > 0 ? Color.accentTint : .secondary)
                         .frame(width: 32, height: 32)
                         .background(
                             Circle()
-                                .stroke(leftCount > 0 ? Color(red: 0.76, green: 0.60, blue: 0.20) : Color(NSColor.separatorColor), lineWidth: 1.5)
+                                .stroke(leftCount > 0 ? Color.accentTint : Color(NSColor.separatorColor), lineWidth: 1.5)
                         )
                         .contentShape(Circle())
                 }
@@ -358,11 +343,11 @@ struct ContentView: View {
                 Button { moveSelectedFiles(from: .right, to: .left) } label: {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(rightCount > 0 ? Color(red: 0.76, green: 0.60, blue: 0.20) : .secondary)
+                        .foregroundStyle(rightCount > 0 ? Color.accentTint : .secondary)
                         .frame(width: 32, height: 32)
                         .background(
                             Circle()
-                                .stroke(rightCount > 0 ? Color(red: 0.76, green: 0.60, blue: 0.20) : Color(NSColor.separatorColor), lineWidth: 1.5)
+                                .stroke(rightCount > 0 ? Color.accentTint : Color(NSColor.separatorColor), lineWidth: 1.5)
                         )
                         .contentShape(Circle())
                 }
@@ -412,7 +397,7 @@ struct ContentView: View {
             // 마키 선택 중: 인스펙터 갱신 중단 (이전 상태 유지)
             Color.clear
                 .frame(minWidth: 240, idealWidth: 280, maxWidth: 320)
-                .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+                .background(Color.panelCard)
         } else if debouncedInspectorItems.count > 1 {
             MultiInspectorView(items: debouncedInspectorItems, side: app.activeSide)
         } else if let selectedItem = debouncedInspectorItems.first {
@@ -430,7 +415,7 @@ struct ContentView: View {
                 Spacer()
             }
             .frame(minWidth: 240, idealWidth: 280, maxWidth: 320)
-            .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+            .background(Color.panelCard)
         }
     }
 

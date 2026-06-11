@@ -43,7 +43,7 @@ struct TransferPanel: View {
             }
             .padding(.horizontal, 10)
             .frame(height: 24)
-            .background(Color(red: 0.15, green: 0.15, blue: 0.16))
+            .background(Color.panelHeader)
 
             Divider()
 
@@ -55,7 +55,7 @@ struct TransferPanel: View {
                 transferLogView
             }
         }
-        .background(Color(red: 0.18, green: 0.18, blue: 0.19))
+        .background(Color.panelList)
     }
 
     @ViewBuilder
@@ -264,7 +264,7 @@ struct TransferRow: View {
                 }
             }
         }
-        .background(isAlt ? Color(red: 0.16, green: 0.16, blue: 0.17) : .clear)
+        .background(isAlt ? Color.panelCard : .clear)
         .contextMenu {
             Button("취소") { transferManager.cancel(transfer) }
         }
@@ -343,7 +343,7 @@ struct StatusBar: View {
                         .font(.system(size: 8))
                     Text(diskFreeSpace)
                 }
-                .foregroundStyle(.white)
+                .foregroundStyle(.primary)
             }
 
             Spacer()
@@ -375,7 +375,7 @@ struct StatusBar: View {
         .foregroundStyle(.secondary)
         .padding(.horizontal, 10)
         .frame(height: 20)
-        .background(Color(red: 0.15, green: 0.15, blue: 0.16))
+        .background(Color.panelHeader)
         .onAppear { updateDiskFreeSpace() }
         .onReceive(Timer.publish(every: 30, on: .main, in: .common).autoconnect()) { _ in
             updateDiskFreeSpace()
@@ -425,7 +425,7 @@ struct LogView: View {
                     }
                 }
             }
-            .background(Color(red: 0.18, green: 0.18, blue: 0.19))
+            .background(Color.panelList)
             .onChange(of: app.logLines.count) { _, _ in
                 if let last = app.logLines.last {
                     withAnimation { proxy.scrollTo(last.id, anchor: .bottom) }

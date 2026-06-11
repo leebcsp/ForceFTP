@@ -11,7 +11,7 @@ struct SidebarView: View {
     let onNavigate: (String) -> Void
     var onEditConnection: ((Connection) -> Void)? = nil
 
-    private let goldTint = Color(red: 0.76, green: 0.60, blue: 0.20)
+    private let goldTint = Color.accentTint
     private let transmitPink = Color(red: 0.78, green: 0.28, blue: 0.51)
     private var activeBg: Color { transmitPink.opacity(0.15) }
     @State private var favDropIndex: Int? = nil

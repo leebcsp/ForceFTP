@@ -59,7 +59,7 @@ struct ConnectSheet: View {
             footer
         }
         .frame(width: 540)
-        .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+        .background(Color.panelCard)
         .onAppear {
             if let c = editConnection {
                 proto = c.proto
@@ -349,7 +349,7 @@ struct ConnectSheet: View {
             }
         }
         .padding(16)
-        .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+        .background(Color.panelCard)
     }
 
     private func saveCurrentForm() {

@@ -245,7 +245,7 @@ struct QRContentCardView: View {
                             .foregroundStyle(.primary)
                     }
                     .frame(width: 40, height: 40)
-                    .background(Color(white: 0.2))
+                    .background(Color.panelList)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -379,7 +379,7 @@ struct QRContentCardView: View {
                     .lineLimit(12)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(8)
-                    .background(Color(white: 0.12))
+                    .background(Color.panelList)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
                 qrActionButton("복사", icon: "doc.on.doc", color: .orange) {
                     NSPasteboard.general.clearContents()
@@ -409,11 +409,11 @@ struct QRContentCardView: View {
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(white: 0.14))
+        .background(Color.panelCard)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.white.opacity(0.06), lineWidth: 1)
+                .stroke(Color.panelBorder, lineWidth: 1)
         )
     }
 

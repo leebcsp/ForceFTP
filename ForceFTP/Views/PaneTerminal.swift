@@ -89,7 +89,7 @@ struct PaneTerminal: View {
             .padding(.vertical, 5)
             .background(Color.black.opacity(0.25))
         }
-        .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+        .background(Color.panelCard)
         .onAppear {
             shell.showWelcome(pane: pane)
             shell.syncDirectory(pane.currentPath)

@@ -75,7 +75,7 @@ struct PaneView: View {
                     .frame(height: terminalHeight)
             }
         }
-        .background(Color(red: 0.18, green: 0.18, blue: 0.19))
+        .background(Color.panelList)
         .cornerRadius(8)
         .onAppear {
             startFileWatcher()
@@ -185,7 +185,7 @@ struct PaneView: View {
             }
             .buttonStyle(.borderless)
             .disabled(!pane.canGoBack)
-            .foregroundStyle(isActive ? Color(red: 0.25, green: 0.18, blue: 0.05) : .primary)
+            .foregroundStyle(isActive ? Color.activeHeaderFg : .primary)
 
             Button { goForward() } label: {
                 Image(systemName: "chevron.right")
@@ -193,26 +193,26 @@ struct PaneView: View {
             }
             .buttonStyle(.borderless)
             .disabled(!pane.canGoForward)
-            .foregroundStyle(isActive ? Color(red: 0.25, green: 0.18, blue: 0.05) : .primary)
+            .foregroundStyle(isActive ? Color.activeHeaderFg : .primary)
 
             Divider().frame(height: 14)
 
             // Connection icon + label
             Image(systemName: pane.connection.proto == .local ? "laptopcomputer" : "globe")
                 .font(.system(size: 11))
-                .foregroundStyle(isActive ? Color(red: 0.25, green: 0.18, blue: 0.05) : (pane.connection.proto == .local ? .secondary : pane.connection.proto.badgeColor))
+                .foregroundStyle(isActive ? Color.activeHeaderFg : (pane.connection.proto == .local ? .secondary : pane.connection.proto.badgeColor))
 
             Text(pane.connection.proto == .local ? NSUserName() : pane.connection.host)
                 .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(isActive ? Color(red: 0.25, green: 0.18, blue: 0.05) : .primary)
+                .foregroundStyle(isActive ? Color.activeHeaderFg : .primary)
                 .lineLimit(1)
 
             if pane.connection.proto != .local {
                 Text(pane.connection.proto.displayName)
                     .font(.system(size: 9, weight: .bold))
-                    .foregroundStyle(isActive ? Color(red: 0.25, green: 0.18, blue: 0.05) : .white)
+                    .foregroundStyle(isActive ? Color.activeHeaderFg : .white)
                     .padding(.horizontal, 4).padding(.vertical, 1)
-                    .background(isActive ? Color(red: 0.90, green: 0.78, blue: 0.40) : pane.connection.proto.badgeColor)
+                    .background(isActive ? Color.activeHeaderBadge : pane.connection.proto.badgeColor)
                     .clipShape(RoundedRectangle(cornerRadius: 3))
             }
 
@@ -220,7 +220,7 @@ struct PaneView: View {
 
             Text(statusInfo)
                 .font(.system(size: 10.5))
-                .foregroundStyle(isActive ? Color(red: 0.35, green: 0.28, blue: 0.10) : Color.secondary.opacity(0.5))
+                .foregroundStyle(isActive ? Color.activeHeaderDim : Color.secondary.opacity(0.5))
 
             Divider().frame(height: 14)
 
@@ -233,7 +233,7 @@ struct PaneView: View {
                 Image(systemName: "terminal")
                     .font(.system(size: 10))
                     .foregroundStyle(isActive
-                        ? Color(red: 0.25, green: 0.18, blue: 0.05)
+                        ? Color.activeHeaderFg
                         : Color.secondary.opacity(showTerminal ? 1.0 : 0.4))
             }
             .buttonStyle(.borderless)
@@ -244,12 +244,12 @@ struct PaneView: View {
                     .font(.system(size: 10))
             }
             .buttonStyle(.borderless)
-            .foregroundStyle(isActive ? Color(red: 0.25, green: 0.18, blue: 0.05) : .primary)
+            .foregroundStyle(isActive ? Color.activeHeaderFg : .primary)
             .help("새로고침")
         }
         .padding(.horizontal, 8)
         .frame(height: 30)
-        .background(isActive ? Color(red: 0.76, green: 0.60, blue: 0.20) : Color(red: 0.15, green: 0.15, blue: 0.16))
+        .background(isActive ? Color.accentTint : Color.panelHeader)
     }
 
     private var statusInfo: String {
@@ -330,7 +330,7 @@ struct PaneView: View {
             .padding(.horizontal, 8)
         }
         .frame(height: 24)
-        .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+        .background(Color.panelCard)
     }
 
     // MARK: - Column Headers
@@ -352,7 +352,7 @@ struct PaneView: View {
         .frame(height: 22)
         .padding(.horizontal, 3)
         .clipped()
-        .background(Color(red: 0.15, green: 0.15, blue: 0.16))
+        .background(Color.panelHeader)
     }
 
     @ViewBuilder
@@ -429,7 +429,7 @@ struct PaneView: View {
         .foregroundStyle(.tertiary)
         .padding(.horizontal, 8)
         .frame(height: 18)
-        .background(Color(red: 0.15, green: 0.15, blue: 0.16))
+        .background(Color.panelHeader)
     }
 
     // MARK: - File Watcher (로컬 실시간 동기화)
@@ -775,7 +775,7 @@ struct FinderList: View {
                     )
                 }
             }
-            .background(Color(red: 0.18, green: 0.18, blue: 0.19))
+            .background(Color.panelList)
             .onPreferenceChange(SelectedIconFrameKey.self) { frame in
                 guard frame != .zero, let window = NSApp.keyWindow else { return }
                 app.selectedItemGlobalFrame = frame
@@ -1685,8 +1685,8 @@ private struct FileRow: View, Equatable {
     /// Transmit 스타일 핑크 선택 색상
     private static let selectionPink = Color(red: 0.78, green: 0.28, blue: 0.51)
     /// Transmit 스타일 다크 배경 색상
-    private static let tmListBg = Color(red: 0.18, green: 0.18, blue: 0.19)
-    private static let tmAltBg = Color(red: 0.16, green: 0.16, blue: 0.17)
+    private static let tmListBg = Color.panelList
+    private static let tmAltBg = Color.panelCard
 
     private var bgColor: Color {
         if isDropTarget {
@@ -1713,7 +1713,7 @@ private struct FileRow: View, Equatable {
     private var fgColor: Color {
         if isSelected && isActiveSelection { return .white }
         if isHiddenFile { return .secondary.opacity(0.6) }
-        if isRecentlyModified { return Color(red: 0.94, green: 0.81, blue: 0.33) }
+        if isRecentlyModified { return Color.recentTint }
         return .primary
     }
 
@@ -1818,7 +1818,7 @@ private struct FileRow: View, Equatable {
                             if !focused { commitRename() }
                         }
                         .padding(.horizontal, 2)
-                        .background(Color(red: 0.18, green: 0.18, blue: 0.19))
+                        .background(Color.panelList)
                         .cornerRadius(2)
                         .overlay(RoundedRectangle(cornerRadius: 2).stroke(Self.selectionPink, lineWidth: 1))
                 } else {
@@ -2370,7 +2370,7 @@ private struct ListInteractionOverlay: NSViewRepresentable {
             // 반투명 배경
             let bgPath = NSBezierPath(roundedRect: NSRect(x: 0, y: 0, width: totalW, height: totalH),
                                        xRadius: 6, yRadius: 6)
-            NSColor(red: 0.16, green: 0.16, blue: 0.17, alpha: 0.9).setFill()
+            NSColor(name: nil) { $0.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? NSColor(red: 0.16, green: 0.16, blue: 0.17, alpha: 0.9) : NSColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 0.9) }.setFill()
             bgPath.fill()
             NSColor.separatorColor.setStroke()
             bgPath.lineWidth = 0.5

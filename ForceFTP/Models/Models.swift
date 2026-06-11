@@ -8,6 +8,65 @@ import SwiftUI
 import UniformTypeIdentifiers
 import QuickLookThumbnailing
 
+// MARK: - Adaptive Colors
+
+extension Color {
+    /// 헤더, 상태바
+    static let panelHeader = Color(nsColor: .init(name: nil) { appearance in
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            ? NSColor(red: 0.15, green: 0.15, blue: 0.16, alpha: 1)
+            : .windowBackgroundColor
+    })
+    /// 카드, 인스펙터, 행 교대
+    static let panelCard = Color(nsColor: .init(name: nil) { appearance in
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            ? NSColor(red: 0.16, green: 0.16, blue: 0.17, alpha: 1)
+            : NSColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1)
+    })
+    /// 리스트 배경
+    static let panelList = Color(nsColor: .init(name: nil) { appearance in
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            ? NSColor(red: 0.18, green: 0.18, blue: 0.19, alpha: 1)
+            : .textBackgroundColor
+    })
+    /// 포인터/강조 색상 (다크: 노랑, 라이트: 파랑)
+    static let accentTint = Color(nsColor: .init(name: nil) { appearance in
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            ? NSColor(red: 0.76, green: 0.60, blue: 0.20, alpha: 1)
+            : NSColor(red: 0.25, green: 0.52, blue: 0.95, alpha: 1)
+    })
+    /// 최근 수정 파일 색상 (다크: 노랑, 라이트: 파랑)
+    static let recentTint = Color(nsColor: .init(name: nil) { appearance in
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            ? NSColor(red: 0.94, green: 0.81, blue: 0.33, alpha: 1)
+            : NSColor(red: 0.15, green: 0.40, blue: 0.85, alpha: 1)
+    })
+    /// 활성 헤더 텍스트 (다크: 검정, 라이트: 흰색)
+    static let activeHeaderFg = Color(nsColor: .init(name: nil) { appearance in
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            ? NSColor(red: 0.1, green: 0.08, blue: 0.02, alpha: 1)
+            : .white
+    })
+    /// 활성 헤더 보조 텍스트
+    static let activeHeaderDim = Color(nsColor: .init(name: nil) { appearance in
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            ? NSColor(red: 0.25, green: 0.20, blue: 0.05, alpha: 1)
+            : NSColor.white.withAlphaComponent(0.7)
+    })
+    /// 활성 헤더 배지 배경
+    static let activeHeaderBadge = Color(nsColor: .init(name: nil) { appearance in
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            ? NSColor.white.withAlphaComponent(0.25)
+            : NSColor(red: 0.90, green: 0.78, blue: 0.40, alpha: 1)
+    })
+    /// 카드 테두리
+    static let panelBorder = Color(nsColor: .init(name: nil) { appearance in
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            ? NSColor.white.withAlphaComponent(0.06)
+            : NSColor.black.withAlphaComponent(0.08)
+    })
+}
+
 // MARK: - Protocol
 
 enum TransferProtocol: String, CaseIterable, Identifiable, Codable, Hashable {

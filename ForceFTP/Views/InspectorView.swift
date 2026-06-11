@@ -94,7 +94,7 @@ struct InspectorView: View {
                                 .font(.system(size: 11, weight: .medium, design: .monospaced))
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
-                                .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+                                .background(Color.panelCard)
                                 .clipShape(RoundedRectangle(cornerRadius: 4))
                         }
 
@@ -176,7 +176,7 @@ struct InspectorView: View {
             .padding(.top, 8)
         }
         .frame(maxWidth: .infinity)
-        .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+        .background(Color.panelCard)
         .task(id: item.id) {
             perms = Permissions(from: item.permissions, isDirectory: item.isDirectory)
             ownerName = item.owner
@@ -946,7 +946,7 @@ struct MultiInspectorView: View {
                                 .font(.system(size: 11, weight: .medium, design: .monospaced))
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
-                                .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+                                .background(Color.panelCard)
                                 .clipShape(RoundedRectangle(cornerRadius: 4))
                         }
 
@@ -1003,7 +1003,7 @@ struct MultiInspectorView: View {
             .padding(.top, 8)
         }
         .frame(maxWidth: .infinity)
-        .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+        .background(Color.panelCard)
         .task(id: items.map(\.id)) {
             try? await Task.sleep(nanoseconds: 150_000_000)
             guard !Task.isCancelled else { return }

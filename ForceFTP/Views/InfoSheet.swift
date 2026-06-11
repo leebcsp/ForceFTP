@@ -58,7 +58,7 @@ struct InfoSheet: View {
             footer
         }
         .frame(width: 380)
-        .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+        .background(Color.panelCard)
         .task(id: item.id) {
             loadMediaInfo()
             detectQRCode()
@@ -140,7 +140,7 @@ struct InfoSheet: View {
                 Text(perms.octal).font(.system(size: 13, design: .monospaced).weight(.bold))
             }
             .padding(.horizontal, 10).padding(.vertical, 7)
-            .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+            .background(Color.panelCard)
             .clipShape(RoundedRectangle(cornerRadius: 6))
 
             if item.isDirectory {
@@ -167,7 +167,7 @@ struct InfoSheet: View {
                 .disabled(applying)
         }
         .padding(14)
-        .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+        .background(Color.panelCard)
     }
 
     // MARK: - Helpers
