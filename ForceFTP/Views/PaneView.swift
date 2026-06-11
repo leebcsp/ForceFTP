@@ -1706,10 +1706,15 @@ private struct FileRow: View, Equatable {
     }
 
     private var isHiddenFile: Bool { item.name.hasPrefix(".") }
+    private var isRecentlyModified: Bool {
+        item.modified > Date().addingTimeInterval(-86400)
+    }
 
     private var fgColor: Color {
         if isSelected && isActiveSelection { return .white }
-        return isHiddenFile ? .secondary.opacity(0.6) : .primary
+        if isHiddenFile { return .secondary.opacity(0.6) }
+        if isRecentlyModified { return Color(red: 0.94, green: 0.81, blue: 0.33) }
+        return .primary
     }
 
     private var dimColor: Color {
