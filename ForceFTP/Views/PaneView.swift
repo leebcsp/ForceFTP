@@ -2387,7 +2387,13 @@ private struct ListInteractionOverlay: NSViewRepresentable {
                 if file.isDirectory {
                     fileIcon = NSWorkspace.shared.icon(for: .folder)
                 } else {
-                    fileIcon = NSWorkspace.shared.icon(forFile: file.path)
+                    let ext = (file.name as NSString).pathExtension.lowercased()
+                    if let utType = UTType(filenameExtension: ext),
+                       utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
+                        fileIcon = NSWorkspace.shared.icon(for: utType)
+                    } else {
+                        fileIcon = NSWorkspace.shared.icon(forFile: file.path)
+                    }
                 }
                 fileIcon.size = NSSize(width: iconSz, height: iconSz)
                 let iconY = y + (rowH - iconSz) / 2

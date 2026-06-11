@@ -5,6 +5,7 @@
 
 import SwiftUI
 import Quartz
+import UniformTypeIdentifiers
 
 // MARK: - QLPreviewPanel coordinator
 
@@ -31,6 +32,11 @@ final class QuickLookCoordinator: NSObject, QLPreviewPanelDataSource, QLPreviewP
 
     func previewPanel(_ panel: QLPreviewPanel!, transitionImageFor item: (any QLPreviewItem)!, contentRect: UnsafeMutablePointer<NSRect>!) -> Any! {
         guard let url = fileURL else { return nil }
+        let ext = url.pathExtension.lowercased()
+        if let utType = UTType(filenameExtension: ext),
+           utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
+            return NSWorkspace.shared.icon(for: utType)
+        }
         return NSWorkspace.shared.icon(forFile: url.path)
     }
 

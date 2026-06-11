@@ -234,7 +234,14 @@ struct InspectorView: View {
     }
 
     private var systemIcon: NSImage {
-        let icon = NSWorkspace.shared.icon(forFile: fullPath)
+        let ext = (fullPath as NSString).pathExtension.lowercased()
+        let icon: NSImage
+        if let utType = UTType(filenameExtension: ext),
+           utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
+            icon = NSWorkspace.shared.icon(for: utType)
+        } else {
+            icon = NSWorkspace.shared.icon(forFile: fullPath)
+        }
         icon.size = NSSize(width: 128, height: 128)
         return icon
     }
@@ -1260,7 +1267,14 @@ struct MultiInspectorView: View {
         if pane.connection.proto == .local {
             let parentDir = pane.parentPath(for: item.id)
             let path = (parentDir as NSString).appendingPathComponent(item.name)
-            let icon = NSWorkspace.shared.icon(forFile: path)
+            let ext = (item.name as NSString).pathExtension.lowercased()
+            let icon: NSImage
+            if let utType = UTType(filenameExtension: ext),
+               utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
+                icon = NSWorkspace.shared.icon(for: utType)
+            } else {
+                icon = NSWorkspace.shared.icon(forFile: path)
+            }
             Image(nsImage: icon)
                 .resizable().interpolation(.high).aspectRatio(contentMode: .fit)
         } else {
