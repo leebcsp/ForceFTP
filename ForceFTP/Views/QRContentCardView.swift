@@ -9,6 +9,7 @@ import MapKit
 struct QRContentCardView: View {
     let qr: QRContent
     @EnvironmentObject var app: AppState
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         switch qr {
@@ -409,7 +410,32 @@ struct QRContentCardView: View {
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.panelCard)
+        .background {
+            if colorScheme == .light {
+                ZStack {
+                    LinearGradient(
+                        colors: [.blue.opacity(0.15), .purple.opacity(0.10), .cyan.opacity(0.12)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    Circle()
+                        .fill(.blue.opacity(0.20))
+                        .frame(width: 120, height: 120)
+                        .offset(x: -60, y: -40)
+                    Circle()
+                        .fill(.purple.opacity(0.15))
+                        .frame(width: 100, height: 100)
+                        .offset(x: 80, y: 30)
+                    Circle()
+                        .fill(.mint.opacity(0.18))
+                        .frame(width: 80, height: 80)
+                        .offset(x: 20, y: 50)
+                }
+                .blur(radius: 30)
+            } else {
+                Color.panelCard
+            }
+        }
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
             RoundedRectangle(cornerRadius: 12)
