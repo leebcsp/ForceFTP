@@ -24,8 +24,6 @@
     <string>public.app-category.utilities</string>
     <key>NSHumanReadableCopyright</key>
     <string>© 2026</string>
-    <key>NSAppleMusicUsageDescription</key>
-    <string>미디어 파일 변환을 위해 접근합니다.</string>
     <key>NSAppleEventsUsageDescription</key>
     <string>문서 변환 및 시스템 설정 접근을 위해 필요합니다.</string>
     <key>NSDesktopFolderUsageDescription</key>

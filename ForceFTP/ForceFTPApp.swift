@@ -53,10 +53,7 @@ struct ForceFTPApp: App {
             ContentView()
                 .environmentObject(transferManager)
                 .frame(minWidth: 1100, minHeight: 700)
-                .onAppear {
-                    appearance.apply()
-                    Self.preflightMediaAccess()
-                }
+                .onAppear { appearance.apply() }
         }
         .defaultSize(width: 1400, height: 900)
         .windowStyle(.titleBar)
@@ -165,19 +162,6 @@ struct ForceFTPApp: App {
         }
     }
 
-    private static func preflightMediaAccess() {
-        guard !UserDefaults.standard.bool(forKey: "mediaAccessGranted") else { return }
-        DispatchQueue.global(qos: .utility).async {
-            let musicDir = NSHomeDirectory() + "/Music"
-            let readable = FileManager.default.isReadableFile(atPath: musicDir)
-            if readable {
-                _ = try? FileManager.default.contentsOfDirectory(atPath: musicDir)
-            }
-            DispatchQueue.main.async {
-                UserDefaults.standard.set(true, forKey: "mediaAccessGranted")
-            }
-        }
-    }
 }
 
 private struct NewWindowButton: View {
