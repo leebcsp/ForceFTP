@@ -15,6 +15,8 @@ struct InfoSheet: View {
     @State private var recursive: Bool = false
     @State private var applying: Bool = false
     @State private var error: String?
+    @State private var mediaInfo: [MediaInfoRow] = []
+    @State private var qrContent: QRContent? = nil
 
     init(item: RemoteItem, side: PaneSide, isPresented: Binding<Bool>) {
         self.item = item
@@ -22,6 +24,13 @@ struct InfoSheet: View {
         self._isPresented = isPresented
         self._perms = State(initialValue: Permissions(from: item.permissions,
                                                       isDirectory: item.isDirectory))
+    }
+
+    private var pane: PaneState { app.pane(side) }
+    private var fullPath: String {
+        if let fp = item.fullPath { return fp }
+        let parentDir = pane.parentPath(for: item.id)
+        return (parentDir as NSString).appendingPathComponent(item.name)
     }
 
     var body: some View {
@@ -33,6 +42,16 @@ struct InfoSheet: View {
                     generalSection
                     Divider().padding(.horizontal, 16)
                     permissionsSection
+
+                    if !mediaInfo.isEmpty {
+                        Divider().padding(.horizontal, 16)
+                        mediaInfoSection
+                    }
+
+                    if let qr = qrContent {
+                        Divider().padding(.horizontal, 16)
+                        qrSection(qr)
+                    }
                 }
                 .padding(.vertical, 12)
             }
@@ -40,6 +59,10 @@ struct InfoSheet: View {
         }
         .frame(width: 380)
         .background(Color(red: 0.16, green: 0.16, blue: 0.17))
+        .task(id: item.id) {
+            loadMediaInfo()
+            detectQRCode()
+        }
     }
 
     private var header: some View {
@@ -213,6 +236,69 @@ struct InfoSheet: View {
             "xlsx": "Excel 스프레드시트"
         ]
         return map[ext] ?? (ext.isEmpty ? "파일" : "\(ext.uppercased()) 파일")
+    }
+
+    // MARK: - Media Info Section
+
+    private var mediaInfoSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            sectionTitle("미디어 정보")
+            grid {
+                ForEach(mediaInfo) { row in
+                    if row.isHeader {
+                        Text(row.label)
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(.secondary)
+                            .padding(.top, 4)
+                    } else {
+                        kv("\(row.label):", row.value)
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+    }
+
+    // MARK: - QR Code Section
+
+    private func qrSection(_ qr: QRContent) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            sectionTitle("QR 코드 내용")
+            QRContentCardView(qr: qr)
+        }
+        .padding(.horizontal, 16)
+    }
+
+    // MARK: - Media / QR Loading
+
+    private func loadMediaInfo() {
+        mediaInfo = []
+        guard pane.connection.proto == .local, !item.isDirectory else { return }
+        let path = fullPath
+        let ext = (path as NSString).pathExtension.lowercased()
+
+        let imageExts: Set = ["png","jpg","jpeg","gif","webp","heic","heif","bmp","tiff","tif","svg","ico"]
+        let videoExts: Set = ["mp4","mov","m4v","avi","mkv","wmv","flv","webm","ts","mts","3gp"]
+        let audioExts: Set = ["mp3","aac","m4a","wav","flac","ogg","wma","aiff","aif","opus"]
+
+        if imageExts.contains(ext) {
+            mediaInfo = MediaInfoHelper.loadImageInfo(path: path)
+        } else if videoExts.contains(ext) || audioExts.contains(ext) {
+            Task.detached {
+                let rows = MediaInfoHelper.probeMediaInfo(path: path, isAudio: audioExts.contains(ext))
+                await MainActor.run { self.mediaInfo = rows }
+            }
+        }
+    }
+
+    private func detectQRCode() {
+        qrContent = nil
+        guard pane.connection.proto == .local else { return }
+        let path = fullPath
+        Task.detached {
+            guard let parsed = MediaInfoHelper.detectQRCode(path: path) else { return }
+            await MainActor.run { self.qrContent = parsed }
+        }
     }
 
     private func applyChmod() {

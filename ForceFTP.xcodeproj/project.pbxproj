@@ -24,11 +24,13 @@
 		00000000AAAA111122223333 /* GoogleDriveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000AAAA444455556666 /* GoogleDriveService.swift */; };
 		00000000B2C3D4E5F6070003 /* PaneTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000B2C3D4E5F6070004 /* PaneTerminal.swift */; };
 		00000000C3D4E5F607080005 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000C3D4E5F607080006 /* InspectorView.swift */; };
-		00000000D4E5F60708090007 /* QuickLookPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000D4E5F60708090008 /* QuickLookPreview.swift */; };
-		00000000E5F6070809100009 /* ConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000E5F607080910000A /* ConversionService.swift */; };
 		00000000CREDITS0000000001 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 00000000CREDITS0000000002 /* Credits.rtf */; };
+		00000000D4E5F60708090007 /* QuickLookPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000D4E5F60708090008 /* QuickLookPreview.swift */; };
 		00000000DEP5ERV1CE000001 /* DependencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000DEP5ERV1CE000002 /* DependencyService.swift */; };
 		00000000DEPCHECK00000001 /* DependencyCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000DEPCHECK00000002 /* DependencyCheckView.swift */; };
+		00000000E5F6070809100009 /* ConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000E5F607080910000A /* ConversionService.swift */; };
+		00000000MED1AHELP000001 /* MediaInfoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000MED1AHELP000002 /* MediaInfoHelper.swift */; };
+		00000000QRCARD00V000001 /* QRContentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000QRCARD00V000002 /* QRContentCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,11 +54,13 @@
 		00000000AAAA444455556666 /* GoogleDriveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDriveService.swift; sourceTree = "<group>"; };
 		00000000B2C3D4E5F6070004 /* PaneTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaneTerminal.swift; sourceTree = "<group>"; };
 		00000000C3D4E5F607080006 /* InspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorView.swift; sourceTree = "<group>"; };
-		00000000D4E5F60708090008 /* QuickLookPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreview.swift; sourceTree = "<group>"; };
-		00000000E5F607080910000A /* ConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionService.swift; sourceTree = "<group>"; };
 		00000000CREDITS0000000002 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		00000000D4E5F60708090008 /* QuickLookPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreview.swift; sourceTree = "<group>"; };
 		00000000DEP5ERV1CE000002 /* DependencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyService.swift; sourceTree = "<group>"; };
 		00000000DEPCHECK00000002 /* DependencyCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyCheckView.swift; sourceTree = "<group>"; };
+		00000000E5F607080910000A /* ConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionService.swift; sourceTree = "<group>"; };
+		00000000MED1AHELP000002 /* MediaInfoHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfoHelper.swift; sourceTree = "<group>"; };
+		00000000QRCARD00V000002 /* QRContentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRContentCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,7 @@
 				00000000C3D4E5F607080006 /* InspectorView.swift */,
 				00000000D4E5F60708090008 /* QuickLookPreview.swift */,
 				00000000DEPCHECK00000002 /* DependencyCheckView.swift */,
+				00000000QRCARD00V000002 /* QRContentCardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -129,6 +134,7 @@
 				00000000AAAA444455556666 /* GoogleDriveService.swift */,
 				0000000023F274C70D439CF8 /* TransferManager.swift */,
 				00000000DEP5ERV1CE000002 /* DependencyService.swift */,
+				00000000MED1AHELP000002 /* MediaInfoHelper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -232,6 +238,8 @@
 				00000000D4E5F60708090007 /* QuickLookPreview.swift in Sources */,
 				00000000DEP5ERV1CE000001 /* DependencyService.swift in Sources */,
 				00000000DEPCHECK00000001 /* DependencyCheckView.swift in Sources */,
+				00000000MED1AHELP000001 /* MediaInfoHelper.swift in Sources */,
+				00000000QRCARD00V000001 /* QRContentCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +255,7 @@
 				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_TEAM = Q397T6N4GW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -258,7 +266,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.55;
+				MARKETING_VERSION = 1.56;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.ForceFTP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -383,7 +391,7 @@
 				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_TEAM = Q397T6N4GW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -394,7 +402,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.55;
+				MARKETING_VERSION = 1.56;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.ForceFTP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
