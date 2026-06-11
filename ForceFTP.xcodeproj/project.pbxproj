@@ -27,6 +27,8 @@
 		00000000D4E5F60708090007 /* QuickLookPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000D4E5F60708090008 /* QuickLookPreview.swift */; };
 		00000000E5F6070809100009 /* ConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000E5F607080910000A /* ConversionService.swift */; };
 		00000000CREDITS0000000001 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 00000000CREDITS0000000002 /* Credits.rtf */; };
+		00000000DEP5ERV1CE000001 /* DependencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000DEP5ERV1CE000002 /* DependencyService.swift */; };
+		00000000DEPCHECK00000001 /* DependencyCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000DEPCHECK00000002 /* DependencyCheckView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		00000000D4E5F60708090008 /* QuickLookPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreview.swift; sourceTree = "<group>"; };
 		00000000E5F607080910000A /* ConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionService.swift; sourceTree = "<group>"; };
 		00000000CREDITS0000000002 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		00000000DEP5ERV1CE000002 /* DependencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyService.swift; sourceTree = "<group>"; };
+		00000000DEPCHECK00000002 /* DependencyCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyCheckView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 				00000000B2C3D4E5F6070004 /* PaneTerminal.swift */,
 				00000000C3D4E5F607080006 /* InspectorView.swift */,
 				00000000D4E5F60708090008 /* QuickLookPreview.swift */,
+				00000000DEPCHECK00000002 /* DependencyCheckView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 				00000000646F9F16E62D4CFD /* FileService.swift */,
 				00000000AAAA444455556666 /* GoogleDriveService.swift */,
 				0000000023F274C70D439CF8 /* TransferManager.swift */,
+				00000000DEP5ERV1CE000002 /* DependencyService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -224,6 +230,8 @@
 				00000000B2C3D4E5F6070003 /* PaneTerminal.swift in Sources */,
 				00000000C3D4E5F607080005 /* InspectorView.swift in Sources */,
 				00000000D4E5F60708090007 /* QuickLookPreview.swift in Sources */,
+				00000000DEP5ERV1CE000001 /* DependencyService.swift in Sources */,
+				00000000DEPCHECK00000001 /* DependencyCheckView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,7 +247,7 @@
 				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = Q397T6N4GW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -375,7 +383,7 @@
 				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = Q397T6N4GW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;

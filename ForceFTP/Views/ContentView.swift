@@ -39,6 +39,8 @@ struct ContentView: View {
     @AppStorage("layout.transferPanelHeight") private var savedTransferPanelHeight: Double = 120
     @State private var transferPanelHeight: CGFloat = 120
     @AppStorage("listZoomLevel") private var zoomLevel: Int = 1
+    @StateObject private var depService = DependencyService.shared
+    @State private var showDepCheck = false
 
     var body: some View {
         NavigationSplitView(columnVisibility: $sidebarVisibility) {
@@ -241,12 +243,19 @@ struct ContentView: View {
         .overlay(alignment: .top) {
             ToastOverlay(toasts: app.toasts, onDismiss: { app.removeToast($0) })
         }
+        .overlay {
+            if showDepCheck {
+                DependencyCheckView(service: depService)
+                    .transition(.opacity)
+            }
+        }
         .onAppear {
             transferPanelHeight = CGFloat(savedTransferPanelHeight)
             initialLoad()
             setupSpacebarMonitor()
             setupTransferCallback()
             checkFullDiskAccess()
+            checkDependencies()
         }
         .alert("전체 디스크 접근 권한 필요", isPresented: $showFDAAlert) {
             Button("시스템 설정 열기") {
@@ -701,6 +710,17 @@ struct ContentView: View {
                 if pane.connection.proto != .local {
                     app.appendLog(.error, "접속 실패 (\(pane.connection.host)): \(error.localizedDescription)")
                 }
+            }
+        }
+    }
+
+    private func checkDependencies() {
+        Task {
+            showDepCheck = true
+            await depService.checkAndInstallAll()
+            try? await Task.sleep(nanoseconds: 800_000_000)
+            withAnimation(.easeInOut(duration: 0.3)) {
+                showDepCheck = false
             }
         }
     }
