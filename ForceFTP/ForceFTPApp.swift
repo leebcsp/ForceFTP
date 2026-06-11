@@ -112,6 +112,14 @@ struct ForceFTPApp: App {
                 .keyboardShortcut("0", modifiers: .command)
             }
 
+            CommandGroup(after: .appSettings) {
+                Button("전체 디스크 접근 권한 열기…") {
+                    if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
+
             CommandGroup(replacing: .undoRedo) {
                 Button("되살리기") {
                     NotificationCenter.default.post(name: .fileUndo, object: nil)
