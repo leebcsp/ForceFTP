@@ -236,11 +236,10 @@ struct InspectorView: View {
     private var systemIcon: NSImage {
         let ext = (fullPath as NSString).pathExtension.lowercased()
         let icon: NSImage
-        if let utType = UTType(filenameExtension: ext),
-           utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
+        if let utType = UTType(filenameExtension: ext) {
             icon = NSWorkspace.shared.icon(for: utType)
         } else {
-            icon = NSWorkspace.shared.icon(forFile: fullPath)
+            icon = NSWorkspace.shared.icon(for: .data)
         }
         icon.size = NSSize(width: 128, height: 128)
         return icon
@@ -1274,14 +1273,14 @@ struct MultiInspectorView: View {
     }
 
     private func safeIcon(for item: RemoteItem) -> NSImage {
-        let parentDir = pane.parentPath(for: item.id)
-        let path = (parentDir as NSString).appendingPathComponent(item.name)
         let ext = (item.name as NSString).pathExtension.lowercased()
-        if let utType = UTType(filenameExtension: ext),
-           utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
+        if item.isDirectory {
+            return NSWorkspace.shared.icon(for: .folder)
+        }
+        if let utType = UTType(filenameExtension: ext) {
             return NSWorkspace.shared.icon(for: utType)
         }
-        return NSWorkspace.shared.icon(forFile: path)
+        return NSWorkspace.shared.icon(for: .data)
     }
 
     private func infoRow(_ label: String, _ value: String) -> some View {

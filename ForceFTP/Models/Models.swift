@@ -466,22 +466,8 @@ final class IconCache {
     }
 
     func icon(forPath path: String, isDirectory: Bool) -> NSImage {
-        if let cached = pathCache[path] { return cached }
-        let img: NSImage
-        let ext = (path as NSString).pathExtension.lowercased()
-        if !isDirectory,
-           let utType = UTType(filenameExtension: ext),
-           utType.conforms(to: .audiovisualContent) || utType.conforms(to: .audio) {
-            img = NSWorkspace.shared.icon(for: utType)
-        } else {
-            img = NSWorkspace.shared.icon(forFile: path)
-        }
-        img.size = NSSize(width: 16, height: 16)
-        if pathCache.count >= cacheLimit {
-            pathCache.removeAll(keepingCapacity: true)
-        }
-        pathCache[path] = img
-        return img
+        let name = (path as NSString).lastPathComponent
+        return icon(for: name, isDirectory: isDirectory)
     }
 
     func clearPathCache() {
