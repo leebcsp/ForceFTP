@@ -309,8 +309,7 @@ struct ContentView: View {
                     showRightPane.toggle()
                 }
             } label: {
-                Image(systemName: showRightPane ? "sidebar.right" : "sidebar.right")
-                    .symbolVariant(showRightPane ? .none : .slash)
+                Image(systemName: showRightPane ? "square.split.2x1.fill" : "square.fill")
             }
             .help(showRightPane ? "오른쪽 패널 닫기" : "오른쪽 패널 열기")
         }
