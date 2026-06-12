@@ -163,6 +163,7 @@ final class AppState: ObservableObject {
 
         loadSavedConnections()
         loadRecentConnections()
+        loadTags()
         loadFavorites()
         restoreLastPaneState()
         appendLog(.info, "ForceFinder 시작됨.")
@@ -284,6 +285,19 @@ final class AppState: ObservableObject {
         if let data = UserDefaults.standard.data(forKey: "recentConnections"),
            let saved = try? JSONDecoder().decode([Connection].self, from: data) {
             recentConnections = saved
+        }
+    }
+
+    func saveTags() {
+        if let data = try? JSONEncoder().encode(sidebarTags) {
+            UserDefaults.standard.set(data, forKey: "sidebarTags")
+        }
+    }
+
+    private func loadTags() {
+        if let data = UserDefaults.standard.data(forKey: "sidebarTags"),
+           let saved = try? JSONDecoder().decode([SidebarTag].self, from: data) {
+            sidebarTags = saved
         }
     }
 

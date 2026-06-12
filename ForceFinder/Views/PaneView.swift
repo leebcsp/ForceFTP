@@ -1156,6 +1156,7 @@ struct FinderList: View {
                            Task { await self.reload() }
                        } : nil,
                        isLocal: isLocalConn,
+                       sidebarTags: app.sidebarTags,
                        renamingItemId: $renamingItemId,
                        isDropTarget: dropTargetItemId == item.id,
                        isContextTarget: contextMenuItemId == item.id,
@@ -1691,6 +1692,7 @@ private struct FileRow: View, Equatable {
     var conversionProgress: Double? = nil
     var onCancelConversion: (() -> Void)? = nil
     var isLocal: Bool = false
+    var sidebarTags: [SidebarTag] = SidebarTag.defaults
     @Binding var renamingItemId: UUID?
     var isDropTarget: Bool = false
     var isContextTarget: Bool = false
@@ -2005,7 +2007,7 @@ private struct FileRow: View, Equatable {
             }
 
             Menu("태그") {
-                ForEach(SidebarTag.defaults) { tag in
+                ForEach(sidebarTags) { tag in
                     Button {
                         onAction(.setTag(item.tagColorName == tag.colorName ? nil : tag.colorName))
                     } label: {

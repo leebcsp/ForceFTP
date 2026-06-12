@@ -16,6 +16,8 @@ struct SidebarView: View {
     private var activeBg: Color { transmitPink.opacity(0.15) }
     @State private var favDropIndex: Int? = nil
     @State private var favDragSourceId: UUID? = nil  // 내부 재정렬 시 드래그 중인 항목
+    @State private var editingTagId: UUID? = nil
+    @State private var editingTagName: String = ""
 
     private func isConnectionOpen(_ c: Connection) -> Bool {
         let lc = app.leftPane.connection
@@ -77,22 +79,42 @@ struct SidebarView: View {
                 ForEach(app.sidebarTags) { tag in
                     let activePane = app.pane(app.activeSide)
                     let isActive = activePane.tagFilter == tag.colorName
-                    Button {
-                        filterByTag(tag)
-                    } label: {
-                        Label {
-                            Text(tag.name)
-                                .fontWeight(isActive ? .semibold : .regular)
-                        } icon: {
+                    if editingTagId == tag.id {
+                        HStack(spacing: 6) {
                             Circle()
                                 .fill(tag.color)
                                 .frame(width: 10, height: 10)
+                            TextField("", text: $editingTagName)
+                                .textFieldStyle(.plain)
+                                .font(.system(size: 13))
+                                .onSubmit { commitTagRename(tag) }
+                                .onExitCommand { editingTagId = nil }
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .contentShape(Rectangle())
+                        .padding(.leading, -5)
+                    } else {
+                        Button {
+                            filterByTag(tag)
+                        } label: {
+                            Label {
+                                Text(tag.name)
+                                    .fontWeight(isActive ? .semibold : .regular)
+                            } icon: {
+                                Circle()
+                                    .fill(tag.color)
+                                    .frame(width: 10, height: 10)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.leading, -5)
+                        .contextMenu {
+                            Button("이름 변경") {
+                                editingTagName = tag.name
+                                editingTagId = tag.id
+                            }
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .padding(.leading, -5)
                 }
             } header: {
                 sectionHeader("Tags")
@@ -263,6 +285,15 @@ struct SidebarView: View {
         case .smb:   return "server.rack"
         case .googleDrive: return "icloud"
         }
+    }
+
+    private func commitTagRename(_ tag: SidebarTag) {
+        let newName = editingTagName.trimmingCharacters(in: .whitespaces)
+        if !newName.isEmpty, let idx = app.sidebarTags.firstIndex(where: { $0.id == tag.id }) {
+            app.sidebarTags[idx].name = newName
+            app.saveTags()
+        }
+        editingTagId = nil
     }
 
     private func filterByTag(_ tag: SidebarTag) {
