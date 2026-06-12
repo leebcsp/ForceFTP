@@ -838,15 +838,21 @@ struct ContentView: View {
             // Cmd+=: 확대, Cmd+-: 축소 (Cmd+= 키를 직접 처리)
             if let chars = event.charactersIgnoringModifiers, mods == .command {
                 if chars == "=" || chars == "+" {
-                    self.zoomLevel = min(self.zoomLevel + 1, 3)
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        self.zoomLevel = min(self.zoomLevel + 1, 3)
+                    }
                     return nil
                 }
                 if chars == "-" {
-                    self.zoomLevel = max(self.zoomLevel - 1, 1)
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        self.zoomLevel = max(self.zoomLevel - 1, 1)
+                    }
                     return nil
                 }
                 if chars == "0" {
-                    self.zoomLevel = 1
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        self.zoomLevel = 1
+                    }
                     return nil
                 }
             }
