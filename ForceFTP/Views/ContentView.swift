@@ -309,7 +309,7 @@ struct ContentView: View {
                     showRightPane.toggle()
                 }
             } label: {
-                Image(systemName: showRightPane ? "square.split.2x1.fill" : "square.fill")
+                Image(systemName: showRightPane ? "rectangle.split.2x1" : "rectangle")
             }
             .help(showRightPane ? "오른쪽 패널 닫기" : "오른쪽 패널 열기")
         }
