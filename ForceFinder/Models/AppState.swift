@@ -298,6 +298,39 @@ final class AppState: ObservableObject {
            let saved = try? JSONDecoder().decode([SidebarFavorite].self, from: data) {
             sidebarFavorites = saved
         }
+        injectCloudStorageFavorites()
+    }
+
+    private func injectCloudStorageFavorites() {
+        let cloudDir = (NSHomeDirectory() as NSString).appendingPathComponent("Library/CloudStorage")
+        guard let entries = try? FileManager.default.contentsOfDirectory(atPath: cloudDir) else { return }
+        var changed = false
+        for entry in entries {
+            guard !entry.hasPrefix(".") else { continue }
+            let fullPath = (cloudDir as NSString).appendingPathComponent(entry)
+            var isDir: ObjCBool = false
+            guard FileManager.default.fileExists(atPath: fullPath, isDirectory: &isDir), isDir.boolValue else { continue }
+
+            let (name, icon): (String, String)
+            if entry.hasPrefix("GoogleDrive") {
+                name = "Google Drive"
+                icon = "externaldrive.badge.icloud"
+            } else if entry.hasPrefix("OneDrive") {
+                name = "OneDrive"
+                icon = "cloud"
+            } else if entry.hasPrefix("Dropbox") {
+                name = "Dropbox"
+                icon = "shippingbox"
+            } else {
+                name = entry
+                icon = "folder.badge.questionmark"
+            }
+
+            if sidebarFavorites.contains(where: { $0.path == fullPath }) { continue }
+            sidebarFavorites.append(SidebarFavorite(name: name, path: fullPath, icon: icon))
+            changed = true
+        }
+        if changed { saveFavorites() }
     }
 
     // MARK: - 마지막 패인 상태 저장/복원
