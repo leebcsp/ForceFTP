@@ -268,7 +268,15 @@ struct ContentView: View {
 
         ToolbarItem(placement: .principal) {
             TextField("검색", text: $search)
-                .textFieldStyle(.roundedBorder)
+                .textFieldStyle(.plain)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 5)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color(nsColor: .textBackgroundColor))
+                        .stroke(Color(nsColor: .separatorColor), lineWidth: 0.5)
+                )
+                .focusEffectDisabled()
                 .frame(width: 300)
                 .onSubmit { performSearch() }
                 .onChange(of: search) { _, newValue in
