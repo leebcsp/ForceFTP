@@ -202,7 +202,7 @@ struct PaneView: View {
                 .font(.system(size: 11))
                 .foregroundStyle(isActive ? Color.activeHeaderFg : (pane.connection.proto == .local ? .secondary : pane.connection.proto.badgeColor))
 
-            Text(pane.connection.proto == .local ? NSUserName() : pane.connection.host)
+            Text(pane.connection.proto == .local ? NSUserName() : pane.connection.name)
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(isActive ? Color.activeHeaderFg : .primary)
                 .lineLimit(1)

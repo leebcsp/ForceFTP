@@ -52,7 +52,7 @@ struct SidebarView: View {
                 Section {
                     ForEach(app.recentConnections) { c in
                         sidebarButton(icon: protoIcon(c.proto), tint: goldTint,
-                                      label: "\(c.username)@\(c.host)",
+                                      label: c.name,
                                       trailing: c.proto.displayName) {
                             connectRecent(c)
                         }
@@ -103,7 +103,7 @@ struct SidebarView: View {
                 ForEach(Array(app.sidebarFavorites.enumerated()), id: \.element.id) { idx, fav in
                     sidebarButton(icon: fav.icon, tint: goldTint,
                                   label: fav.name,
-                                  trailing: fav.isLocal ? nil : fav.connection?.host) {
+                                  trailing: fav.isLocal ? nil : fav.connection?.name) {
                         if fav.isLocal {
                             onNavigate(fav.path)
                         } else if let conn = fav.connection {
@@ -412,7 +412,7 @@ struct SidebarView: View {
             do {
                 let items = try await FileService.shared.list(connection: c, path: c.remotePath)
                 await MainActor.run { pane.items = items; pane.isLoading = false }
-                app.appendLog(.ok, "연결됨: \(c.host)")
+                app.appendLog(.ok, "연결됨: \(c.name)")
             } catch {
                 app.appendLog(.error, "연결 실패: \(error.localizedDescription)")
             }
@@ -430,7 +430,7 @@ struct SidebarView: View {
             do {
                 let items = try await FileService.shared.list(connection: c, path: path)
                 await MainActor.run { pane.items = items; pane.isLoading = false }
-                app.appendLog(.ok, "연결됨: \(c.host) → \(path)")
+                app.appendLog(.ok, "연결됨: \(c.name) → \(path)")
             } catch {
                 app.appendLog(.error, "연결 실패: \(error.localizedDescription)")
             }

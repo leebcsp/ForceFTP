@@ -12,6 +12,7 @@ struct ConnectSheet: View {
     var editConnection: Connection? = nil
 
     @State private var proto: TransferProtocol = .sftp
+    @State private var serverName: String = ""
     @State private var host: String = ""
     @State private var portText: String = "22"
     @State private var username: String = ""
@@ -63,6 +64,7 @@ struct ConnectSheet: View {
         .onAppear {
             if let c = editConnection {
                 proto = c.proto
+                serverName = c.name
                 host = c.host
                 portText = "\(c.port)"
                 username = c.username
@@ -173,7 +175,10 @@ struct ConnectSheet: View {
     @ViewBuilder
     private var standardForm: some View {
         Group {
-            row(label: "서버") {
+            row(label: "서버명") {
+                TextField("내 서버", text: $serverName).textFieldStyle(.roundedBorder)
+            }
+            row(label: "호스트") {
                 TextField("example.com", text: $host).textFieldStyle(.roundedBorder)
                 Text("포트:").font(.system(size: 11)).foregroundStyle(.secondary)
                 TextField("22", text: $portText)
@@ -389,8 +394,9 @@ struct ConnectSheet: View {
         testResult = nil
         error = nil
 
+        let displayName = serverName.trimmingCharacters(in: .whitespaces).isEmpty ? host : serverName.trimmingCharacters(in: .whitespaces)
         let c = Connection(
-            name: host, proto: proto, host: host, port: Int(portText) ?? proto.defaultPort,
+            name: displayName, proto: proto, host: host, port: Int(portText) ?? proto.defaultPort,
             username: anonymous ? "anonymous" : username,
             password: password,
             remotePath: path,
@@ -421,8 +427,9 @@ struct ConnectSheet: View {
         isConnecting = true
         error = nil
 
+        let displayName = serverName.trimmingCharacters(in: .whitespaces).isEmpty ? host : serverName.trimmingCharacters(in: .whitespaces)
         let c = Connection(
-            name: host, proto: proto, host: host, port: Int(portText) ?? proto.defaultPort,
+            name: displayName, proto: proto, host: host, port: Int(portText) ?? proto.defaultPort,
             username: anonymous ? "anonymous" : username,
             password: password,
             remotePath: path,
@@ -443,7 +450,7 @@ struct ConnectSheet: View {
                     pane.isLoading = false
                     isPresented = false
                     app.addRecentConnection(c)
-                    app.appendLog(.ok, "\(c.host) 연결됨 (\(proto.displayName))")
+                    app.appendLog(.ok, "\(c.name) 연결됨 (\(proto.displayName))")
                 }
             } catch {
                 await MainActor.run {

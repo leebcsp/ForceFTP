@@ -594,7 +594,7 @@ final class PaneState: ObservableObject, Identifiable {
         var comps: [(String, String)] = []
         let parts = currentPath.split(separator: "/").map(String.init)
         var acc = ""
-        let rootName = connection.proto == .local ? "/" : connection.host
+        let rootName = connection.proto == .local ? "/" : connection.name
         comps.append((rootName, "/"))
         for p in parts {
             acc += "/" + p
