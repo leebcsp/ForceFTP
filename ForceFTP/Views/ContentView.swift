@@ -29,6 +29,7 @@ struct ContentView: View {
     @State private var infoSourceFrame: CGRect = .zero
     @AppStorage("layout.showTransfers") private var showTransfers = false
     @AppStorage("layout.showInspector") private var showInspector = true
+    @AppStorage("layout.showRightPane") private var showRightPane = true
     @AppStorage("layout.inspectorWidth") private var inspectorWidth: Double = 280
     /// 0~1 비율 (왼쪽 파인더가 차지하는 비율)
     @AppStorage("layout.leftPaneRatio") private var leftPaneRatio: Double = 0.5
@@ -133,23 +134,31 @@ struct ContentView: View {
                 VStack(spacing: 0) {
                     GeometryReader { geo in
                         let totalW = geo.size.width
-                        let centerW: CGFloat = 46
-                        let paneArea = totalW - centerW
-                        let leftW = paneArea * leftPaneRatio
-                        let rightW = paneArea - leftW
-                        HStack(spacing: 0) {
+                        if showRightPane {
+                            let centerW: CGFloat = 46
+                            let paneArea = totalW - centerW
+                            let leftW = paneArea * leftPaneRatio
+                            let rightW = paneArea - leftW
+                            HStack(spacing: 0) {
+                                PaneView(side: .left,
+                                         onConnect: { connectSide = .left; showConnect = true },
+                                         onInfo: { item in showInfoModal(side: .left, item: item) })
+                                    .frame(width: leftW, alignment: .leading)
+                                    .clipped()
+
+                                centerArrowButtons
+
+                                PaneView(side: .right,
+                                         onConnect: { connectSide = .right; showConnect = true },
+                                         onInfo: { item in showInfoModal(side: .right, item: item) })
+                                    .frame(width: rightW, alignment: .leading)
+                                    .clipped()
+                            }
+                        } else {
                             PaneView(side: .left,
                                      onConnect: { connectSide = .left; showConnect = true },
                                      onInfo: { item in showInfoModal(side: .left, item: item) })
-                                .frame(width: leftW, alignment: .leading)
-                                .clipped()
-
-                            centerArrowButtons
-
-                            PaneView(side: .right,
-                                     onConnect: { connectSide = .right; showConnect = true },
-                                     onInfo: { item in showInfoModal(side: .right, item: item) })
-                                .frame(width: rightW, alignment: .leading)
+                                .frame(width: totalW, alignment: .leading)
                                 .clipped()
                         }
                     }
@@ -292,6 +301,18 @@ struct ContentView: View {
                 Image(systemName: "circle.lefthalf.filled")
             }
             .help("시스템")
+        }
+
+        ToolbarItem(placement: .automatic) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    showRightPane.toggle()
+                }
+            } label: {
+                Image(systemName: showRightPane ? "sidebar.right" : "sidebar.right")
+                    .symbolVariant(showRightPane ? .none : .slash)
+            }
+            .help(showRightPane ? "오른쪽 패널 닫기" : "오른쪽 패널 열기")
         }
 
         ToolbarItemGroup(placement: .automatic) {
