@@ -628,10 +628,9 @@ actor FileService {
 
     /// SSH ControlMaster 소켓 경로
     private func controlPath(for connection: Connection) -> String {
-        let dir = FileManager.default.temporaryDirectory
-            .appendingPathComponent("ForceFinder_ssh").path
+        let dir = "/tmp/ff_ssh"
         try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true)
-        return "\(dir)/\(connection.host)_\(connection.port)_\(connection.username)"
+        return "\(dir)/\(connection.host)_\(connection.port)"
     }
 
     /// SSH 공통 옵션 (ControlMaster 재사용)
