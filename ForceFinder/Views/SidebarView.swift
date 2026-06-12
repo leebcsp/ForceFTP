@@ -1,6 +1,6 @@
 //
 //  SidebarView.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI
@@ -179,7 +179,7 @@ struct SidebarView: View {
     private var appVersion: String {
         let ver = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
-        return "ForceFTP v\(ver) (\(build))"
+        return "ForceFinder v\(ver) (\(build))"
     }
 
     private var buildDate: String {

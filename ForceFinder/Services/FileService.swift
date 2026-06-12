@@ -1,6 +1,6 @@
 //
 //  FileService.swift
-//  ForceFTP
+//  ForceFinder
 //
 //  실제 파일 시스템 및 원격 서버 접속 지원
 //  - Local: FileManager
@@ -327,7 +327,7 @@ actor FileService {
         // Server → Server (로컬 임시 파일 경유)
         if source.proto != .local && dest.proto != .local {
             let tmpDir = FileManager.default.temporaryDirectory
-                .appendingPathComponent("ForceFTP_\(UUID().uuidString)")
+                .appendingPathComponent("ForceFinder_\(UUID().uuidString)")
             let tmpPath = tmpDir.appendingPathComponent(
                 (sourcePath as NSString).lastPathComponent).path
             try FileManager.default.createDirectory(at: tmpDir, withIntermediateDirectories: true)
@@ -629,7 +629,7 @@ actor FileService {
     /// SSH ControlMaster 소켓 경로
     private func controlPath(for connection: Connection) -> String {
         let dir = FileManager.default.temporaryDirectory
-            .appendingPathComponent("ForceFTP_ssh").path
+            .appendingPathComponent("ForceFinder_ssh").path
         try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true)
         return "\(dir)/\(connection.host)_\(connection.port)_\(connection.username)"
     }

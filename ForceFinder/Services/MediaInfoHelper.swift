@@ -1,6 +1,6 @@
 //
 //  MediaInfoHelper.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import Foundation

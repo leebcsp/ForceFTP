@@ -1,6 +1,6 @@
 //
 //  TransferManager.swift
-//  ForceFTP — Mock backend
+//  ForceFinder — Mock backend
 //
 
 import Foundation

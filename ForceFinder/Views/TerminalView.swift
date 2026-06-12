@@ -1,6 +1,6 @@
 //
 //  TerminalView.swift
-//  ForceFTP
+//  ForceFinder
 //
 //  Legacy terminal view - kept for backward compatibility.
 //  Each pane now has its own inline terminal (PaneTerminal).

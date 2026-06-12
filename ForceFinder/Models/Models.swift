@@ -1,6 +1,6 @@
 //
 //  Models.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import Foundation

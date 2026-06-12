@@ -1,8 +1,8 @@
-# ForceFTP - 기능 정의서
+# ForceFinder - 기능 정의서
 
 ## 1. 개요
 
-ForceFTP는 macOS용 듀얼 패널 파일 관리자 및 FTP/SFTP 클라이언트입니다.
+ForceFinder는 macOS용 듀얼 패널 파일 관리자 및 FTP/SFTP 클라이언트입니다.
 로컬 파일 시스템과 원격 서버 간 파일 탐색, 전송, 관리를 하나의 인터페이스에서 수행합니다.
 
 - **플랫폼**: macOS (SwiftUI)
@@ -314,8 +314,8 @@ struct Permissions {
 ## 7. 파일 구조
 
 ```
-ForceFTP/
-├── ForceFTPApp.swift              # 앱 진입점, 메뉴, 단축키
+ForceFinder/
+├── ForceFinderApp.swift              # 앱 진입점, 메뉴, 단축키
 ├── Models/
 │   ├── Models.swift               # 데이터 모델 (Connection, RemoteItem, Transfer 등)
 │   └── AppState.swift             # 앱 상태 (PaneState, Clipboard, UndoAction 등)

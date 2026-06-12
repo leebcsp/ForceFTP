@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0000000027FDD28498CA86AA"
-               BuildableName = "ForceFTP.app"
-               BlueprintName = "ForceFTP"
-               ReferencedContainer = "container:ForceFTP.xcodeproj">
+               BuildableName = "ForceFinder.app"
+               BlueprintName = "ForceFinder"
+               ReferencedContainer = "container:ForceFinder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0000000027FDD28498CA86AA"
-            BuildableName = "ForceFTP.app"
-            BlueprintName = "ForceFTP"
-            ReferencedContainer = "container:ForceFTP.xcodeproj">
+            BuildableName = "ForceFinder.app"
+            BlueprintName = "ForceFinder"
+            ReferencedContainer = "container:ForceFinder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0000000027FDD28498CA86AA"
-            BuildableName = "ForceFTP.app"
-            BlueprintName = "ForceFTP"
-            ReferencedContainer = "container:ForceFTP.xcodeproj">
+            BuildableName = "ForceFinder.app"
+            BlueprintName = "ForceFinder"
+            ReferencedContainer = "container:ForceFinder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

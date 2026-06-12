@@ -1,6 +1,6 @@
 //
 //  BottomPanel.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI

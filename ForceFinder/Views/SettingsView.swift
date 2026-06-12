@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI
@@ -50,7 +50,7 @@ struct SettingsView: View {
             Image(systemName: "bolt.horizontal.fill")
                 .font(.system(size: 32))
                 .foregroundStyle(Color(red: 0.04, green: 0.42, blue: 1.0))
-            Text("ForceFTP").font(.system(size: 16, weight: .bold))
+            Text("ForceFinder").font(.system(size: 16, weight: .bold))
             Text("v1.0").font(.caption).foregroundStyle(.secondary)
             Text("듀얼 패인 파일 매니저 — SFTP/FTP 지원")
                 .font(.caption)

@@ -1,6 +1,6 @@
 //
 //  InspectorView.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI

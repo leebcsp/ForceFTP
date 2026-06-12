@@ -1,6 +1,6 @@
 //
 //  GoogleDriveService.swift
-//  ForceFTP
+//  ForceFinder
 //
 //  Google Drive REST API v3 + OAuth2 지원
 //
@@ -634,7 +634,7 @@ private class LoopbackServer {
                 }
 
                 // 성공 응답
-                let html = "<!DOCTYPE html><html><body><h2>인증 성공!</h2><p>ForceFTP로 돌아가세요. 이 창을 닫아도 됩니다.</p></body></html>"
+                let html = "<!DOCTYPE html><html><body><h2>인증 성공!</h2><p>ForceFinder로 돌아가세요. 이 창을 닫아도 됩니다.</p></body></html>"
                 let response = "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nConnection: close\r\n\r\n\(html)"
                 _ = response.withCString { send(client, $0, strlen($0), 0) }
 

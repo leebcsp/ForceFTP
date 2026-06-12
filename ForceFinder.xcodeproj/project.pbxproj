@@ -16,7 +16,7 @@
 		0000000030C9488015D7F868 /* BottomPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000005B570CFEE525F29C /* BottomPanel.swift */; };
 		000000003910C65507FF92AE /* InfoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000005A96A321EC519A27 /* InfoSheet.swift */; };
 		000000003EB750DAABF1466B /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000646F9F16E62D4CFD /* FileService.swift */; };
-		000000004EB371EB2FE3812A /* ForceFTPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000673156143CAF30DE /* ForceFTPApp.swift */; };
+		000000004EB371EB2FE3812A /* ForceFinderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000673156143CAF30DE /* ForceFinderApp.swift */; };
 		000000005C651FD257C33626 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000007465E8B3B0BB7D4E /* Models.swift */; };
 		000000005E9AAA5FA4FD9E7B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000043D48DF053D89822 /* SettingsView.swift */; };
 		00000000689C6AFEB61BE2D9 /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000003B98221E228F05A1 /* TerminalView.swift */; };
@@ -37,7 +37,7 @@
 		000000000D5DF0FDDAB72BEB /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		0000000023F274C70D439CF8 /* TransferManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferManager.swift; sourceTree = "<group>"; };
 		00000000256FFBF46D48BD44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		00000000279B4D42C5946899 /* ForceFTP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ForceFTP.entitlements; sourceTree = "<group>"; };
+		00000000279B4D42C5946899 /* ForceFinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ForceFinder.entitlements; sourceTree = "<group>"; };
 		00000000303AD22189DB2E8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		000000003523788C753882C0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		000000003B98221E228F05A1 /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
@@ -46,8 +46,8 @@
 		000000005A96A321EC519A27 /* InfoSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSheet.swift; sourceTree = "<group>"; };
 		000000005B570CFEE525F29C /* BottomPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomPanel.swift; sourceTree = "<group>"; };
 		00000000646F9F16E62D4CFD /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
-		00000000673156143CAF30DE /* ForceFTPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceFTPApp.swift; sourceTree = "<group>"; };
-		00000000739161FEF406F4EA /* ForceFTP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForceFTP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00000000673156143CAF30DE /* ForceFinderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceFinderApp.swift; sourceTree = "<group>"; };
+		00000000739161FEF406F4EA /* ForceFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForceFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0000000073E5CB18ACE6F3F2 /* PaneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaneView.swift; sourceTree = "<group>"; };
 		000000007465E8B3B0BB7D4E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		00000000A1B2C3D4E5F60002 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
@@ -77,24 +77,24 @@
 		000000000B9B7BC14B31DCD3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				00000000739161FEF406F4EA /* ForceFTP.app */,
+				00000000739161FEF406F4EA /* ForceFinder.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		00000000118990A253598A62 /* ForceFTP */ = {
+		00000000118990A253598A62 /* ForceFinder */ = {
 			isa = PBXGroup;
 			children = (
-				00000000673156143CAF30DE /* ForceFTPApp.swift */,
+				00000000673156143CAF30DE /* ForceFinderApp.swift */,
 				000000002C24EFD33181EF08 /* Models */,
 				000000004B2169DF22318EA3 /* Views */,
 				00000000565C20200CA7B637 /* Services */,
 				00000000256FFBF46D48BD44 /* Assets.xcassets */,
 				00000000303AD22189DB2E8E /* Info.plist */,
-				00000000279B4D42C5946899 /* ForceFTP.entitlements */,
+				00000000279B4D42C5946899 /* ForceFinder.entitlements */,
 				00000000CREDITS0000000002 /* Credits.rtf */,
 			);
-			path = ForceFTP;
+			path = ForceFinder;
 			sourceTree = "<group>";
 		};
 		000000002C24EFD33181EF08 /* Models */ = {
@@ -142,7 +142,7 @@
 		000000006A95514DF31A553E = {
 			isa = PBXGroup;
 			children = (
-				00000000118990A253598A62 /* ForceFTP */,
+				00000000118990A253598A62 /* ForceFinder */,
 				000000000B9B7BC14B31DCD3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -150,9 +150,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0000000027FDD28498CA86AA /* ForceFTP */ = {
+		0000000027FDD28498CA86AA /* ForceFinder */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0000000044B2BCF321A92D22 /* Build configuration list for PBXNativeTarget "ForceFTP" */;
+			buildConfigurationList = 0000000044B2BCF321A92D22 /* Build configuration list for PBXNativeTarget "ForceFinder" */;
 			buildPhases = (
 				000000005A4EFB0609498BC8 /* Sources */,
 				0000000036E99137231D9EF4 /* Frameworks */,
@@ -162,9 +162,9 @@
 			);
 			dependencies = (
 			);
-			name = ForceFTP;
-			productName = ForceFTP;
-			productReference = 00000000739161FEF406F4EA /* ForceFTP.app */;
+			name = ForceFinder;
+			productName = ForceFinder;
+			productReference = 00000000739161FEF406F4EA /* ForceFinder.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -182,7 +182,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0000000017F77461F15AF186 /* Build configuration list for PBXProject "ForceFTP" */;
+			buildConfigurationList = 0000000017F77461F15AF186 /* Build configuration list for PBXProject "ForceFinder" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = ko;
 			hasScannedForEncodings = 0;
@@ -196,7 +196,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0000000027FDD28498CA86AA /* ForceFTP */,
+				0000000027FDD28498CA86AA /* ForceFinder */,
 			);
 		};
 /* End PBXProject section */
@@ -224,7 +224,7 @@
 				00000000052967557187A33F /* TransferManager.swift in Sources */,
 				00000000AAAA111122223333 /* GoogleDriveService.swift in Sources */,
 				00000000E5F6070809100009 /* ConversionService.swift in Sources */,
-				000000004EB371EB2FE3812A /* ForceFTPApp.swift in Sources */,
+				000000004EB371EB2FE3812A /* ForceFinderApp.swift in Sources */,
 				0000000030C9488015D7F868 /* BottomPanel.swift in Sources */,
 				000000002DC8284771F6F47A /* ConnectSheet.swift in Sources */,
 				0000000029CE1235D15ADF9B /* ContentView.swift in Sources */,
@@ -252,22 +252,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = none;
-				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ForceFinder/ForceFinder.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 71;
 				DEVELOPMENT_TEAM = Q397T6N4GW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ForceFTP/Info.plist;
+				INFOPLIST_FILE = ForceFinder/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ForceFTP;
+				MARKETING_VERSION = 2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.ForceFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
@@ -388,22 +388,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = none;
-				CODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ForceFinder/ForceFinder.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 71;
 				DEVELOPMENT_TEAM = Q397T6N4GW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ForceFTP/Info.plist;
+				INFOPLIST_FILE = ForceFinder/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ForceFTP;
+				MARKETING_VERSION = 2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.ForceFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
@@ -412,7 +412,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0000000017F77461F15AF186 /* Build configuration list for PBXProject "ForceFTP" */ = {
+		0000000017F77461F15AF186 /* Build configuration list for PBXProject "ForceFinder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0000000048C37F4D561D5724 /* Debug */,
@@ -421,7 +421,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0000000044B2BCF321A92D22 /* Build configuration list for PBXNativeTarget "ForceFTP" */ = {
+		0000000044B2BCF321A92D22 /* Build configuration list for PBXNativeTarget "ForceFinder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				000000004D694B8D750CF10E /* Debug */,

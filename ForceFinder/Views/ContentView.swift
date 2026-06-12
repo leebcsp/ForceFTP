@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI
@@ -86,7 +86,7 @@ struct ContentView: View {
                 }
                 Button("나중에", role: .cancel) { UserDefaults.standard.set(true, forKey: "TL.fdaPrompted") }
             } message: {
-                Text("파일 관리를 위해 전체 디스크 접근 권한이 필요합니다.\n시스템 설정 > 개인정보 보호 > 전체 디스크 접근에서 ForceFTP를 추가해 주세요.")
+                Text("파일 관리를 위해 전체 디스크 접근 권한이 필요합니다.\n시스템 설정 > 개인정보 보호 > 전체 디스크 접근에서 ForceFinder를 추가해 주세요.")
             }
             .onDisappear {
                 app.saveLastPaneState()

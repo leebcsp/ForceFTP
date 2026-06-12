@@ -1,6 +1,6 @@
 //
 //  QRContentCardView.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI
@@ -573,7 +573,7 @@ struct QRContentCardView: View {
         let ics = """
         BEGIN:VCALENDAR
         VERSION:2.0
-        PRODID:-//ForceFTP//QR//KO
+        PRODID:-//ForceFinder//QR//KO
         BEGIN:VEVENT
         SUMMARY:\(event.summary)
         DTSTART:\(event.dtstart)

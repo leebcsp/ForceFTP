@@ -1,6 +1,6 @@
 //
-//  ForceFTPApp.swift
-//  ForceFTP — Mock build (bundled demo file systems)
+//  ForceFinderApp.swift
+//  ForceFinder — Mock build (bundled demo file systems)
 //
 
 import SwiftUI
@@ -43,7 +43,7 @@ enum AppAppearance: String, CaseIterable, Identifiable {
 }
 
 @main
-struct ForceFTPApp: App {
+struct ForceFinderApp: App {
     private var transferManager: TransferManager { .shared }
     @AppStorage("listZoomLevel") private var zoomLevel: Int = 1
     @AppStorage("appearance") private var appearance: AppAppearance = .system

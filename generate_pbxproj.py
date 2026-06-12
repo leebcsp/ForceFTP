@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generates Xcode project for ForceFTP."""
+"""Generates Xcode project for ForceFinder."""
 
 import os
 from pathlib import Path
 
-ROOT = Path("/home/claude/ForceFTP")
-PROJECT_NAME = "ForceFTP"
+ROOT = Path("/home/claude/ForceFinder")
+PROJECT_NAME = "ForceFinder"
 PROJ_DIR = ROOT / f"{PROJECT_NAME}.xcodeproj"
 SRC_ROOT = ROOT / PROJECT_NAME
 
@@ -32,13 +32,13 @@ for s in sources:
     file_ids[s] = (make(f"FILE_REF::{s}"), make(f"BUILD_FILE::{s}"))
 
 INFO_PLIST_ID  = make("FILE_REF::Info.plist")
-ENTL_ID        = make("FILE_REF::ForceFTP.entitlements")
+ENTL_ID        = make("FILE_REF::ForceFinder.entitlements")
 ASSETS_REF_ID  = make("FILE_REF::Assets.xcassets")
 ASSETS_BLD_ID  = make("BUILD_FILE::Assets.xcassets")
 
 GRP_MAIN       = make("GROUP::MAIN")
 GRP_PRODUCTS   = make("GROUP::PRODUCTS")
-GRP_TRANSMIT   = make("GROUP::ForceFTP")
+GRP_TRANSMIT   = make("GROUP::ForceFinder")
 GRP_MODELS     = make("GROUP::Models")
 GRP_VIEWS      = make("GROUP::Views")
 GRP_SERVICES   = make("GROUP::Services")
@@ -79,17 +79,17 @@ def section_file_refs():
         f'lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; }};'
     )
     lines.append(
-        f'\t\t{ENTL_ID} /* ForceFTP.entitlements */ = {{isa = PBXFileReference; '
-        f'lastKnownFileType = text.plist.entitlements; path = ForceFTP.entitlements; sourceTree = "<group>"; }};'
+        f'\t\t{ENTL_ID} /* ForceFinder.entitlements */ = {{isa = PBXFileReference; '
+        f'lastKnownFileType = text.plist.entitlements; path = ForceFinder.entitlements; sourceTree = "<group>"; }};'
     )
     lines.append(
         f'\t\t{ASSETS_REF_ID} /* Assets.xcassets */ = {{isa = PBXFileReference; '
         f'lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; }};'
     )
     lines.append(
-        f'\t\t{PROD_REF_ID} /* ForceFTP.app */ = {{isa = PBXFileReference; '
+        f'\t\t{PROD_REF_ID} /* ForceFinder.app */ = {{isa = PBXFileReference; '
         f'explicitFileType = wrapper.application; includeInIndex = 0; '
-        f'path = ForceFTP.app; sourceTree = BUILT_PRODUCTS_DIR; }};'
+        f'path = ForceFinder.app; sourceTree = BUILT_PRODUCTS_DIR; }};'
     )
     lines.append("/* End PBXFileReference section */")
     return "\n".join(lines)
@@ -115,7 +115,7 @@ def section_groups():
     lines.append(f'\t\t{GRP_MAIN} = {{')
     lines.append(f'\t\t\tisa = PBXGroup;')
     lines.append(f'\t\t\tchildren = (')
-    lines.append(f'\t\t\t\t{GRP_TRANSMIT} /* ForceFTP */,')
+    lines.append(f'\t\t\t\t{GRP_TRANSMIT} /* ForceFinder */,')
     lines.append(f'\t\t\t\t{GRP_PRODUCTS} /* Products */,')
     lines.append(f'\t\t\t);')
     lines.append(f'\t\t\tsourceTree = "<group>";')
@@ -124,13 +124,13 @@ def section_groups():
     lines.append(f'\t\t{GRP_PRODUCTS} /* Products */ = {{')
     lines.append(f'\t\t\tisa = PBXGroup;')
     lines.append(f'\t\t\tchildren = (')
-    lines.append(f'\t\t\t\t{PROD_REF_ID} /* ForceFTP.app */,')
+    lines.append(f'\t\t\t\t{PROD_REF_ID} /* ForceFinder.app */,')
     lines.append(f'\t\t\t);')
     lines.append(f'\t\t\tname = Products;')
     lines.append(f'\t\t\tsourceTree = "<group>";')
     lines.append(f'\t\t}};')
 
-    lines.append(f'\t\t{GRP_TRANSMIT} /* ForceFTP */ = {{')
+    lines.append(f'\t\t{GRP_TRANSMIT} /* ForceFinder */ = {{')
     lines.append(f'\t\t\tisa = PBXGroup;')
     lines.append(f'\t\t\tchildren = (')
     for s in groups["_root"]:
@@ -142,9 +142,9 @@ def section_groups():
             lines.append(f'\t\t\t\t{sub_group_ids[sub]} /* {sub} */,')
     lines.append(f'\t\t\t\t{ASSETS_REF_ID} /* Assets.xcassets */,')
     lines.append(f'\t\t\t\t{INFO_PLIST_ID} /* Info.plist */,')
-    lines.append(f'\t\t\t\t{ENTL_ID} /* ForceFTP.entitlements */,')
+    lines.append(f'\t\t\t\t{ENTL_ID} /* ForceFinder.entitlements */,')
     lines.append(f'\t\t\t);')
-    lines.append(f'\t\t\tpath = ForceFTP;')
+    lines.append(f'\t\t\tpath = ForceFinder;')
     lines.append(f'\t\t\tsourceTree = "<group>";')
     lines.append(f'\t\t}};')
 
@@ -204,9 +204,9 @@ def section_frameworks_phase():
 
 def section_target():
     return f"""/* Begin PBXNativeTarget section */
-\t\t{TARGET_ID} /* ForceFTP */ = {{
+\t\t{TARGET_ID} /* ForceFinder */ = {{
 \t\t\tisa = PBXNativeTarget;
-\t\t\tbuildConfigurationList = {CFG_LIST_TGT} /* Build configuration list for PBXNativeTarget "ForceFTP" */;
+\t\t\tbuildConfigurationList = {CFG_LIST_TGT} /* Build configuration list for PBXNativeTarget "ForceFinder" */;
 \t\t\tbuildPhases = (
 \t\t\t\t{PHASE_SRC} /* Sources */,
 \t\t\t\t{PHASE_FRA} /* Frameworks */,
@@ -216,9 +216,9 @@ def section_target():
 \t\t\t);
 \t\t\tdependencies = (
 \t\t\t);
-\t\t\tname = ForceFTP;
-\t\t\tproductName = ForceFTP;
-\t\t\tproductReference = {PROD_REF_ID} /* ForceFTP.app */;
+\t\t\tname = ForceFinder;
+\t\t\tproductName = ForceFinder;
+\t\t\tproductReference = {PROD_REF_ID} /* ForceFinder.app */;
 \t\t\tproductType = "com.apple.product-type.application";
 \t\t}};
 /* End PBXNativeTarget section */"""
@@ -237,7 +237,7 @@ def section_project():
 \t\t\t\t\t}};
 \t\t\t\t}};
 \t\t\t}};
-\t\t\tbuildConfigurationList = {CFG_LIST_PROJ} /* Build configuration list for PBXProject "ForceFTP" */;
+\t\t\tbuildConfigurationList = {CFG_LIST_PROJ} /* Build configuration list for PBXProject "ForceFinder" */;
 \t\t\tcompatibilityVersion = "Xcode 14.0";
 \t\t\tdevelopmentRegion = ko;
 \t\t\thasScannedForEncodings = 0;
@@ -251,7 +251,7 @@ def section_project():
 \t\t\tprojectDirPath = "";
 \t\t\tprojectRoot = "";
 \t\t\ttargets = (
-\t\t\t\t{TARGET_ID} /* ForceFTP */,
+\t\t\t\t{TARGET_ID} /* ForceFinder */,
 \t\t\t);
 \t\t}};
 /* End PBXProject section */"""
@@ -302,19 +302,19 @@ def section_build_configurations():
 \t\t}};"""
 
     target_settings = """\t\t\t\tASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-\t\t\t\tCODE_SIGN_ENTITLEMENTS = ForceFTP/ForceFTP.entitlements;
+\t\t\t\tCODE_SIGN_ENTITLEMENTS = ForceFinder/ForceFinder.entitlements;
 \t\t\t\tCODE_SIGN_STYLE = Automatic;
 \t\t\t\tCOMBINE_HIDPI_IMAGES = YES;
 \t\t\t\tCURRENT_PROJECT_VERSION = 2;
 \t\t\t\tENABLE_HARDENED_RUNTIME = YES;
 \t\t\t\tGENERATE_INFOPLIST_FILE = NO;
-\t\t\t\tINFOPLIST_FILE = ForceFTP/Info.plist;
+\t\t\t\tINFOPLIST_FILE = ForceFinder/Info.plist;
 \t\t\t\tLD_RUNPATH_SEARCH_PATHS = (
 \t\t\t\t\t"$(inherited)",
 \t\t\t\t\t"@executable_path/../Frameworks",
 \t\t\t\t);
 \t\t\t\tMARKETING_VERSION = 1.1;
-\t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = "com.example.ForceFTP";
+\t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = "com.example.ForceFinder";
 \t\t\t\tPRODUCT_NAME = "$(TARGET_NAME)";
 \t\t\t\tSWIFT_EMIT_LOC_STRINGS = YES;
 """
@@ -339,7 +339,7 @@ def section_build_configurations():
 
 def section_configuration_lists():
     return f"""/* Begin XCConfigurationList section */
-\t\t{CFG_LIST_PROJ} /* Build configuration list for PBXProject "ForceFTP" */ = {{
+\t\t{CFG_LIST_PROJ} /* Build configuration list for PBXProject "ForceFinder" */ = {{
 \t\t\tisa = XCConfigurationList;
 \t\t\tbuildConfigurations = (
 \t\t\t\t{CFG_DBG_PROJ} /* Debug */,
@@ -348,7 +348,7 @@ def section_configuration_lists():
 \t\t\tdefaultConfigurationIsVisible = 0;
 \t\t\tdefaultConfigurationName = Release;
 \t\t}};
-\t\t{CFG_LIST_TGT} /* Build configuration list for PBXNativeTarget "ForceFTP" */ = {{
+\t\t{CFG_LIST_TGT} /* Build configuration list for PBXNativeTarget "ForceFinder" */ = {{
 \t\t\tisa = XCConfigurationList;
 \t\t\tbuildConfigurations = (
 \t\t\t\t{CFG_DBG_TGT} /* Debug */,

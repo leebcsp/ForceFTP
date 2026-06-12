@@ -44,7 +44,7 @@
                 <string>public.data</string>
             </array>
             <key>UTTypeDescription</key>
-            <string>ForceFTP Drag Item</string>
+            <string>ForceFinder Drag Item</string>
             <key>UTTypeIdentifier</key>
             <string>com.transmitlite.dragitem</string>
             <key>UTTypeTagSpecification</key>

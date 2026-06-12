@@ -1,6 +1,6 @@
 //
 //  QuickLookPreview.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI

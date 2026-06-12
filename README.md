@@ -7,7 +7,7 @@ UI가 완성된 macOS 네이티브 듀얼 패널 FTP/SFTP 클라이언트입니�
 ## 빌드 방법
 
 1. **Xcode 15+ 필요** (macOS 13.0 이상 타겟)
-2. `ForceFTP.xcodeproj`를 더블클릭해서 Xcode에서 엽니다
+2. `ForceFinder.xcodeproj`를 더블클릭해서 Xcode에서 엽니다
 3. **Signing & Capabilities** 탭에서 본인 Team을 선택 (Personal Team으로도 됩니다)
 4. `⌘R`로 빌드/실행
 
@@ -37,10 +37,10 @@ UI가 완성된 macOS 네이티브 듀얼 패널 FTP/SFTP 클라이언트입니�
 ## 폴더 구조
 
 ```
-ForceFTP/
-├── ForceFTPApp.swift          # 앱 진입점, 메뉴/단축키
+ForceFinder/
+├── ForceFinderApp.swift          # 앱 진입점, 메뉴/단축키
 ├── Info.plist
-├── ForceFTP.entitlements      # Sandbox 활성화 (Mock이라 외부 도구 불필요)
+├── ForceFinder.entitlements      # Sandbox 활성화 (Mock이라 외부 도구 불필요)
 ├── Assets.xcassets/
 ├── Models/
 │   ├── Models.swift               # TransferProtocol, Connection, RemoteItem, Permissions

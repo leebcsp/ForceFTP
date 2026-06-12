@@ -1,6 +1,6 @@
 //
 //  AppState.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI
@@ -165,7 +165,7 @@ final class AppState: ObservableObject {
         loadRecentConnections()
         loadFavorites()
         restoreLastPaneState()
-        appendLog(.info, "ForceFTP 시작됨.")
+        appendLog(.info, "ForceFinder 시작됨.")
     }
 
     func pane(_ side: PaneSide) -> PaneState {

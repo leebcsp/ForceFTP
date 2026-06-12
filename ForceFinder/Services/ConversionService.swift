@@ -1,6 +1,6 @@
 //
 //  ConversionService.swift
-//  ForceFTP
+//  ForceFinder
 //
 //  파일 변환 서비스: 이미지 포맷, 문서→PDF, 압축, 동영상/오디오 변환
 //

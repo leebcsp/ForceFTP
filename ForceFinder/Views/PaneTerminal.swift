@@ -1,6 +1,6 @@
 //
 //  PaneTerminal.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI

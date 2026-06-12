@@ -1,6 +1,6 @@
 //
 //  ConnectSheet.swift
-//  ForceFTP
+//  ForceFinder
 //
 
 import SwiftUI
