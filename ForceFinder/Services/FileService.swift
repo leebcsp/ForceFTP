@@ -621,7 +621,7 @@ actor FileService {
     private func listSFTP(connection: Connection, path: String) async throws -> [RemoteItem] {
         let output = try await runSSHOutput(
             connection: connection,
-            command: "ls -la \(shellEscape(path))"
+            command: "LANG=C ls -la \(shellEscape(path))"
         )
         return parseLsOutput(output)
     }
@@ -1057,10 +1057,13 @@ actor FileService {
 
         // 날짜 파싱
         var modified = Date()
-        let year = Calendar.current.component(.year, from: Date())
+        let now = Date()
+        let year = Calendar.current.component(.year, from: now)
         if timeOrYear.contains(":") {
             dateFormatter.dateFormat = "MMM dd HH:mm yyyy"
-            modified = dateFormatter.date(from: "\(monthStr) \(dayStr) \(timeOrYear) \(year)") ?? Date()
+            if let d = dateFormatter.date(from: "\(monthStr) \(dayStr) \(timeOrYear) \(year)") {
+                modified = d > now ? dateFormatter.date(from: "\(monthStr) \(dayStr) \(timeOrYear) \(year - 1)") ?? d : d
+            }
         } else {
             dateFormatter.dateFormat = "MMM dd yyyy"
             modified = dateFormatter.date(from: "\(monthStr) \(dayStr) \(timeOrYear)") ?? Date()
